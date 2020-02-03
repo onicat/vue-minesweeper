@@ -18,7 +18,7 @@ const store = new Vuex.Store({
           let cell = {
             row,
             col,
-            checked: false,
+            isChecked: false,
             isBomb: false,
             isFlagged: false
           };
