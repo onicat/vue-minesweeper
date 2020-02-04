@@ -5,6 +5,7 @@
       checked: cell.isChecked,
       flag: cell.isFlagged
     }'
+    @click='selectCell(cell)'
   >
   </div>
 </template>
@@ -12,7 +13,12 @@
 <script>
   export default {
     name: 'cellItem',
-    props: ['cell']
+    props: ['cell'],
+    methods: {
+      selectCell(cell) {
+        this.$store.commit('selectCell', cell);
+      }
+    }
   }
 </script>
 
