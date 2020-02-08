@@ -5,8 +5,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     settings: {
-      rowsNumber: 10,
-      colsNumber: 10,
+      rowsNumber: 100,
+      colsNumber: 100,
       bombsNumber: 10
     },
     cells: [],
@@ -14,7 +14,7 @@ const store = new Vuex.Store({
   },
   getters: {
     getAreaSerialIndexes: state => target => {
-      let area = new Set();
+      let area = [];
 
       for (let i = -1; i <= 1; i++) {
         let row = target.row + i;
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
           let col = target.col + j;
           if (col < 0 || col > state.settings.colsNumber - 1) continue;
 
-          area.add(row * state.settings.rowsNumber + col);
+          area.push(row * state.settings.colsNumber + col);
         }
       }
 
@@ -50,19 +50,38 @@ const store = new Vuex.Store({
       }  
     },
     selectCell(state, cell) {
-     if (state.bombsIndexes.size == 0) {
-      this.commit('installBombs', cell);
-     }
+      if (state.bombsIndexes.size == 0) {
+        this.commit('installBombs', cell);
+      }
+      
+      this.commit('openCells', cell);
+    },
+    openCells(state, cell) {
+      let line = [cell.row * state.settings.colsNumber + cell.col];
+      let cells = state.cells;
+
+      while (line.length > 0) {
+        let cell = cells[line[line.length - 1]];
+        
+        line.pop();
+        if (cell.isChecked) continue;
+        if (cell.status == 0) {
+          line.push(...this.getters.getAreaSerialIndexes(cell));
+        }
+
+        cell.isChecked = true;
+      }
     },
     installBombs(state, cell) {
       let bombsIndexes = state.bombsIndexes;
       let cells = state.cells;
       let clickArea = this.getters.getAreaSerialIndexes(cell);
-      clickArea.add(cell.row * state.settings.rowsNumber + cell.col);
-      
+      clickArea.push(cell.row * state.settings.colsNumber + cell.col);
+
       while (bombsIndexes.size < state.settings.bombsNumber) {
         let index = Math.floor(Math.random() * cells.length);
-        if (clickArea.has(index) || bombsIndexes.has(index)) continue;
+
+        if (clickArea.includes(index) || bombsIndexes.has(index)) continue;
         bombsIndexes.add(index);
         cells[index].status = -1;
         
