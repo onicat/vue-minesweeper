@@ -6,7 +6,7 @@
       flag: cell.isFlagged
     }'
     @click='selectCell(cell)'
-  >
+  > {{ (cell.isChecked && cell.status > 0) ? cell.status : null }}
   </div>
 </template>
 
@@ -26,7 +26,14 @@
   .cell-item {
     background-color: #2196F3;
     border-radius: 3px;
-    box-shadow: inset 0 -5px #1976D2;
+    box-shadow: inset 0 -5px #1976D2; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial;
+    font-weight: bold;
+    color: #303130;
+    font-size: 1.2em;
   }
 
   .checked {
@@ -34,7 +41,7 @@
   }
 
   .bomb {
-    background: no-repeat center/80% url(~@/assets/img/bomb.svg), #1976D2;
+    background: no-repeat center/80% url(~@/assets/img/bomb.svg), #2196F3;
     box-shadow: none;
   }
 
