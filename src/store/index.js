@@ -7,10 +7,11 @@ const store = new Vuex.Store({
     settings: {
       rowsNumber: 16,
       colsNumber: 30,
-      bombsNumber: 100
+      bombsNumber: 400
     },
     cells: [],
-    bombsIndexes: new Set()
+    bombsIndexes: new Set(),
+    stage: 'game' // game, losing, win
   },
   getters: {
     getAreaSerialIndexes: state => target => {
@@ -40,7 +41,7 @@ const store = new Vuex.Store({
           let cell = {
             row,
             col,
-            status: 0, /* -1 - bomb, else number of bombs around */
+            status: 0, /* -2 - explosion, -1 - bomb, else bombs around */
             isChecked: false,
             isFlagged: false
           };
@@ -50,7 +51,13 @@ const store = new Vuex.Store({
       }  
     },
     selectCell(state, cell) {
-      if (cell.isFlagged) return;
+      if (cell.isFlagged || state.stage == 'losing') return;
+      
+      if (cell.status == -1) {
+        this.commit('toLose', cell);
+        return;
+      }
+
       if (state.bombsIndexes.size == 0) {
         this.commit('installBombs', cell);
       }
@@ -96,6 +103,8 @@ const store = new Vuex.Store({
     },
     restart(state) {
       state.bombsIndexes.clear();
+      state.stage = 'game';
+
       for (let cell of state.cells) {
         cell.isChecked = false;
         cell.isFlagged = false;
@@ -103,8 +112,16 @@ const store = new Vuex.Store({
       }
     },
     toggleFlag(state, cell) {
-      if (cell.isChecked) return;
+      if (cell.isChecked || state.stage == 'losing') return;
       cell.isFlagged = !cell.isFlagged
+    },
+    toLose(state, cell) {
+      state.stage = 'losing';
+      cell.status = -2;
+
+      for (let index of state.bombsIndexes) {
+        state.cells[index].isChecked = true;
+      }
     }
   }
 });

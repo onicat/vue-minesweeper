@@ -3,7 +3,9 @@
     class='cell-item'
     :class='{
       checked: cell.isChecked,
-      flag: cell.isFlagged
+      flag: cell.isFlagged,
+      explosion: cell.status == -2,
+      bomb: cell.isChecked && cell.status == -1
     }'
     @click='selectCell(cell)'
     @contextmenu='toggleFlag(cell)'
@@ -45,12 +47,20 @@
   }
 
   .bomb {
-    background: no-repeat center/80% url(~@/assets/img/bomb.svg), #2196F3;
+    background: no-repeat center/80% url(~@/assets/img/bomb.svg),
+              #2196F3;
     box-shadow: none;
   }
 
   .flag {
-    background: no-repeat center/80% url(~@/assets/img/flag.svg) #2196F3;
+    background: no-repeat center/80% url(~@/assets/img/flag.svg),
+              #2196F3;
+    box-shadow: none;
+  }
+
+  .explosion {
+    background: no-repeat center/80% url(~@/assets/img/explosion.svg) 
+              #2196F3;
     box-shadow: none;
   }
 </style>
