@@ -50,6 +50,7 @@ const store = new Vuex.Store({
       }  
     },
     selectCell(state, cell) {
+      if (cell.isFlagged) return;
       if (state.bombsIndexes.size == 0) {
         this.commit('installBombs', cell);
       }
@@ -70,6 +71,7 @@ const store = new Vuex.Store({
         }
 
         cell.isChecked = true;
+        if (cell.isFlagged) cell.isFlagged = false;
       }
     },
     installBombs(state, cell) {
@@ -99,6 +101,10 @@ const store = new Vuex.Store({
         cell.isFlagged = false;
         cell.status = 0;
       }
+    },
+    toggleFlag(state, cell) {
+      if (cell.isChecked) return;
+      cell.isFlagged = !cell.isFlagged
     }
   }
 });

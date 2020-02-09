@@ -6,6 +6,7 @@
       flag: cell.isFlagged
     }'
     @click='selectCell(cell)'
+    @contextmenu='toggleFlag(cell)'
   > {{ (cell.isChecked && cell.status > 0) ? cell.status : null }}
   </div>
 </template>
@@ -17,6 +18,9 @@
     methods: {
       selectCell(cell) {
         this.$store.commit('selectCell', cell);
+      },
+      toggleFlag(cell) {
+        this.$store.commit('toggleFlag', cell);
       }
     }
   }

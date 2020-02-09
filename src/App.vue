@@ -14,6 +14,9 @@
   export default {
     name: 'App',
     created: function() {
+      window.addEventListener('contextmenu', (event) => {
+        event.preventDefault()
+      });
       this.$store.commit('generateField');
     },
     components: {
