@@ -5,9 +5,9 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     settings: {
-      rowsNumber: 100,
-      colsNumber: 100,
-      bombsNumber: 10
+      rowsNumber: 16,
+      colsNumber: 30,
+      bombsNumber: 100
     },
     cells: [],
     bombsIndexes: new Set()
@@ -62,7 +62,7 @@ const store = new Vuex.Store({
 
       while (line.length > 0) {
         let cell = cells[line[line.length - 1]];
-        
+
         line.pop();
         if (cell.isChecked) continue;
         if (cell.status == 0) {
@@ -90,6 +90,14 @@ const store = new Vuex.Store({
           let cell = cells[index];
           if (cell.status != -1) cell.status++
         }
+      }
+    },
+    restart(state) {
+      state.bombsIndexes.clear();
+      for (let cell of state.cells) {
+        cell.isChecked = false;
+        cell.isFlagged = false;
+        cell.status = 0;
       }
     }
   }
