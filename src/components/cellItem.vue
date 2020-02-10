@@ -31,8 +31,7 @@
 <style scoped>
   .cell-item {
     background-color: #2196F3;
-    border-radius: 3px;
-    box-shadow: inset 0 -5px #1976D2; 
+    box-shadow: inset 0 -3px #1976D2; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,19 +46,19 @@
   }
 
   .bomb {
-    background: no-repeat center/80% url(~@/assets/img/bomb.svg),
+    background: no-repeat center/80% url(~@/assets/img/64/bomb.png),
               #2196F3;
     box-shadow: none;
   }
 
   .flag {
-    background: no-repeat center/80% url(~@/assets/img/flag.svg),
+    background: no-repeat center/80% url(~@/assets/img/64/flag.png),
               #2196F3;
     box-shadow: none;
   }
 
   .explosion {
-    background: no-repeat center/80% url(~@/assets/img/explosion.svg) 
+    background: no-repeat center/80% url(~@/assets/img/64/explosion.png) 
               #2196F3;
     box-shadow: none;
   }

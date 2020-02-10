@@ -6,8 +6,8 @@ const store = new Vuex.Store({
   state: {
     settings: {
       rowsNumber: 16,
-      colsNumber: 30,
-      bombsNumber: 400
+      colsNumber: 16,
+      bombsNumber: 40
     },
     cells: [],
     bombsIndexes: new Set(),

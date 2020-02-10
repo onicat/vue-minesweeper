@@ -1,8 +1,8 @@
 <template>
   <div class='game-field'
     :style='{
-      gridTemplateRows: `repeat(${$store.state.settings.rowsNumber}, 50px)`,
-      gridTemplateColumns: `repeat(${$store.state.settings.colsNumber}, 50px)`
+      gridTemplateRows: `repeat(${$store.state.settings.rowsNumber}, 30px)`,
+      gridTemplateColumns: `repeat(${$store.state.settings.colsNumber}, 30px)`
     }'
   >
     <cellItem

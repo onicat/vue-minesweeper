@@ -1,10 +1,14 @@
 <template>
   <div class='top-panel'>
-    <img 
+    <div 
       class='restart-button'
-      src='@/assets/img/thinking.svg' alt='restart'
+      :class='{
+        "restart-button_game": $store.state.stage == "game",
+        "restart-button_losing": $store.state.stage == "losing"
+      }'
       @click='restart'
     >
+    </div>
   </div>
 </template>
 
@@ -33,18 +37,25 @@ export default {
     align-items: center;
     justify-content: center;
     background-color: #2196F3;
-    border-radius: 0 0 10px 10px;
     box-shadow: inset 0 -5px #1976D2;
   }
 
   .restart-button {
     width: 40px;
     height: 40px;
-    transition: all 0.3s
+    transition: all 0.3s;
   }
 
   .restart-button:hover {
     width: 45px;
     height: 45px;
+  }
+
+  .restart-button_game {
+    background: no-repeat center/100% url(~@/assets/img/128/thinking.png);
+  }
+  
+  .restart-button_losing {
+    background: no-repeat center/100% url(~@/assets/img/128/angry.png);
   }
 </style>
