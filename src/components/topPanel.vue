@@ -4,7 +4,8 @@
       class='restart-button'
       :class='{
         "restart-button_game": $store.state.stage == "game",
-        "restart-button_losing": $store.state.stage == "losing"
+        "restart-button_losing": $store.state.stage == "losing",
+        "restart-button_win": $store.state.stage == "win"
       }'
       @click='restart'
     >
@@ -57,5 +58,9 @@ export default {
   
   .restart-button_losing {
     background: no-repeat center/100% url(~@/assets/img/128/angry.png);
+  }
+
+  .restart-button_win {
+    background: no-repeat center/100% url(~@/assets/img/128/cool.png);
   }
 </style>

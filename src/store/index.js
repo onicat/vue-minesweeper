@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     },
     cells: [],
     bombsIndexes: new Set(),
-    stage: 'game' // game, losing, win
+    stage: 'game', // game, losing, win
+    checkedCellsCounter: 0
   },
   getters: {
     getAreaSerialIndexes: state => target => {
@@ -32,6 +33,10 @@ const store = new Vuex.Store({
       }
 
       return area;
+    },
+    isWin: state => {
+      let uncheckedLeft = state.cells.length - state.checkedCellsCounter;
+      return (uncheckedLeft == state.bombsIndexes.size) ? true : false; 
     }
   },
   mutations: {
@@ -51,7 +56,9 @@ const store = new Vuex.Store({
       }  
     },
     selectCell(state, cell) {
-      if (cell.isFlagged || state.stage == 'losing') return;
+      if (cell.isFlagged ||
+          state.stage == 'losing' ||
+          state.stage == 'win') return;
       
       if (cell.status == -1) {
         this.commit('toLose', cell);
@@ -63,6 +70,10 @@ const store = new Vuex.Store({
       }
       
       this.commit('openCells', cell);
+
+      if (this.getters.isWin) {
+        this.commit('toWin')
+      }
     },
     openCells(state, cell) {
       let line = [cell.row * state.settings.colsNumber + cell.col];
@@ -78,6 +89,7 @@ const store = new Vuex.Store({
         }
 
         cell.isChecked = true;
+        state.checkedCellsCounter++;
         if (cell.isFlagged) cell.isFlagged = false;
       }
     },
@@ -104,6 +116,7 @@ const store = new Vuex.Store({
     restart(state) {
       state.bombsIndexes.clear();
       state.stage = 'game';
+      state.checkedCellsCounter = 0;
 
       for (let cell of state.cells) {
         cell.isChecked = false;
@@ -112,7 +125,9 @@ const store = new Vuex.Store({
       }
     },
     toggleFlag(state, cell) {
-      if (cell.isChecked || state.stage == 'losing') return;
+      if (cell.isChecked ||
+          state.stage == 'losing' ||
+          state.stage == 'win') return;
       cell.isFlagged = !cell.isFlagged
     },
     toLose(state, cell) {
@@ -122,6 +137,9 @@ const store = new Vuex.Store({
       for (let index of state.bombsIndexes) {
         state.cells[index].isChecked = true;
       }
+    },
+    toWin(state) {
+      state.stage = 'win'
     }
   }
 });
