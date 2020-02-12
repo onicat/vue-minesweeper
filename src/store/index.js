@@ -5,13 +5,13 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     settings: {
-      rowsNumber: 16,
-      colsNumber: 16,
-      bombsNumber: 40
+      rowsNumber: 9,
+      colsNumber: 9,
+      bombsNumber: 10
     },
     cells: [],
     bombsIndexes: new Set(),
-    stage: 'game', // game, losing, win
+    stage: 'start', // start, game, losing, win
     checkedCellsCounter: 0
   },
   getters: {
@@ -66,6 +66,7 @@ const store = new Vuex.Store({
       }
 
       if (state.bombsIndexes.size == 0) {
+        state.stage = 'game';
         this.commit('installBombs', cell);
       }
       
@@ -115,7 +116,7 @@ const store = new Vuex.Store({
     },
     restart(state) {
       state.bombsIndexes.clear();
-      state.stage = 'game';
+      state.stage = 'start';
       state.checkedCellsCounter = 0;
 
       for (let cell of state.cells) {

@@ -12,20 +12,16 @@
       class='top-panel__button top-panel__button_settings'>
     </div>
     <h2 class='top-panel__counter top-panel__counter_bombs'>
-      {{ $store.state.settings.bombsNumber }}
+      {{ bombsNumber }}
     </h2>
     <div 
       class='top-panel__button'
-      :class='{
-        "top-panel__button_thinking": $store.state.stage == "game",
-        "top-panel__button_angry": $store.state.stage == "losing",
-        "top-panel__button_cool": $store.state.stage == "win"
-      }'
+      :class='[restartButtonClass]'
       @click='restart'
     >
     </div>
     <h2 class='top-panel__counter top-panel__counter_time'>
-      0
+      {{ time }}
     </h2>
     <div 
       class='top-panel__button top-panel__button_ref'>
@@ -36,9 +32,50 @@
 <script>
 export default {
   name: 'topPanel',
+  data() {
+    return {
+      time: 0,
+      timerId: null
+    }
+  },
   methods: {
     restart() {
       this.$store.commit("restart")
+    }
+  },
+  computed: {
+    stage() {
+      return this.$store.state.stage
+    },
+    bombsNumber() {
+      return this.$store.state.settings.bombsNumber
+    },
+    restartButtonClass() {
+      switch (this.$store.state.stage) {
+        case 'win':
+          return "top-panel__button_cool";
+        case 'losing':
+          return "top-panel__button_angry";
+        default:
+          return "top-panel__button_thinking";
+      }
+    }
+  },
+  watch: {
+    stage: function(value) {
+      switch (value) {
+        case 'win':
+        case 'losing':
+          clearInterval(this.timerId);
+          break;
+        case 'start':
+          clearInterval(this.timerId);
+          this.time = 0;
+          break;
+        case 'game':
+          this.timerId = setInterval(() => this.time++, 1000);
+          break;
+      }
     }
   },
   mounted() {
