@@ -9,6 +9,7 @@ const store = new Vuex.Store({
       colsNumber: 9,
       bombsNumber: 10
     },
+    popUp: null,
     cells: [],
     bombsIndexes: new Set(),
     stage: 'start', // start, game, losing, win
@@ -114,15 +115,20 @@ const store = new Vuex.Store({
         }
       }
     },
-    restart(state) {
+    restart(state, force) {
       state.bombsIndexes.clear();
       state.stage = 'start';
       state.checkedCellsCounter = 0;
 
-      for (let cell of state.cells) {
-        cell.isChecked = false;
-        cell.isFlagged = false;
-        cell.status = 0;
+      if (force) {
+        state.cells = [];
+        this.commit('generateField')
+      } else {
+        for (let cell of state.cells) {
+          cell.isChecked = false;
+          cell.isFlagged = false;
+          cell.status = 0;
+        }
       }
     },
     toggleFlag(state, cell) {
@@ -141,6 +147,16 @@ const store = new Vuex.Store({
     },
     toWin(state) {
       state.stage = 'win'
+    },
+    showPopUp(state, popUp) {
+      state.popUp = popUp
+    },
+    closePopUp(state) {
+      state.popUp = null
+    },
+    updateSettings(state, settings) {
+      Object.assign(state.settings, settings);
+      this.commit('restart', true);
     }
   }
 });

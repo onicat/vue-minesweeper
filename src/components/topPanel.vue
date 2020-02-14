@@ -9,7 +9,9 @@
       class='top-panel__icon top-panel__icon_bomb'
     >
     <div 
-      class='top-panel__button top-panel__button_settings'>
+      class='top-panel__button top-panel__button_settings'
+      @click='showPopUp("settings")'
+    >
     </div>
     <h2 class='top-panel__counter top-panel__counter_bombs'>
       {{ bombsNumber }}
@@ -41,6 +43,9 @@ export default {
   methods: {
     restart() {
       this.$store.commit("restart")
+    },
+    showPopUp(popUpName) {
+      this.$store.commit('showPopUp', popUpName)
     }
   },
   computed: {
