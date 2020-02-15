@@ -15,7 +15,7 @@
 
 <script>
   export default {
-    name: 'cellItem',
+    name: 'CellItem',
     props: ['cell'],
     methods: {
       selectCell(cell) {

@@ -5,7 +5,7 @@
       gridTemplateColumns: `repeat(${$store.state.settings.colsNumber}, 30px)`
     }'
   >
-    <cellItem
+    <CellItem
       v-for='(cell, index) in $store.state.cells'
       :cell='cell'
       :key='index'
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-  import cellItem from '@/components/cellItem.vue';
+  import CellItem from '@/components/CellItem.vue';
 
   export default {
-    name: 'gameField',
+    name: 'TheGameField',
     components: {
-      cellItem
+      CellItem
     }
   }
 </script>

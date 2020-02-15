@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: 'topPanel',
+  name: 'TheTopPanel',
   data() {
     return {
       time: 0,

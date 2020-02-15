@@ -77,7 +77,7 @@
   import { mapMutations } from 'vuex';
 
   export default {
-    name: 'popUp',
+    name: 'PopUp',
     data() {
       return {
         cache: {

@@ -1,19 +1,19 @@
 <template>
   <div id='app'>
-    <topPanel/>
+    <TheTopPanel/>
     <div class='field-stage'>
-      <gameField/>
+      <TheGameField/>
     </div>
     <transition name='fade'>
-      <popUp v-if='$store.state.popUp'/>
+      <PopUp v-if='$store.state.popUp'/>
     </transition>
   </div>
 </template>
 
 <script>
-  import topPanel from '@/components/topPanel.vue';
-  import gameField from '@/components/gameField.vue';
-  import popUp from '@/components/popUp.vue';
+  import TheTopPanel from '@/components/TheTopPanel.vue';
+  import TheGameField from '@/components/TheGameField.vue';
+  import PopUp from '@/components/PopUp.vue';
 
   export default {
     name: 'App',
@@ -24,27 +24,27 @@
       this.$store.commit('generateField');
     },
     components: {
-      topPanel,
-      gameField,
-      popUp
+      TheTopPanel,
+      TheGameField,
+      PopUp
     }
   }
 </script>
 
 <style scoped>
- #app {
-   width: 100%;
-   height: 100%;
-   background-color: #303130;
-   position: relative;
- }
+  #app {
+    width: 100%;
+    height: 100%;
+    background-color: #303130;
+    position: relative;
+  }
 
- .field-stage {
-   width: 100%;
-   height: calc(100% - 70px); /* 70px - height of topPanel */
-   overflow: auto;
-   display: flex; /* With auto margin for children to avoid pruning elements with overflow*/
- }
+  .field-stage {
+    width: 100%;
+    height: calc(100% - 70px); /* 70px - height of topPanel */
+    overflow: auto;
+    display: flex; /* With auto margin for children to avoid pruning elements with overflow*/
+  }
 
   .fade-enter-active, .fade-leave-active {
     transition: opacity .1s;
