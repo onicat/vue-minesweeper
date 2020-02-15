@@ -27,25 +27,37 @@
         <input 
           class='pop-up__input'
           type='number'
-          v-model='cache.colsNumber'
+          v-model.lazy.number='cache.colsNumber'
+          @change='
+            validateCache("colsNumber", 9, 100);
+            validateCache("bombsNumber", 10, cacheBombsLimit)
+          '
         >
         Height:
         <input 
           class='pop-up__input'
           type='number'
-          v-model='cache.rowsNumber'
+          v-model.lazy.number='cache.rowsNumber'
+          @change='
+            validateCache("rowsNumber", 9, 100);
+            validateCache("bombsNumber", 10, cacheBombsLimit)
+          '
         >
         Bombs:
         <input 
           class='pop-up__input'
           type='number'
-          v-model='cache.bombsNumber'
+          v-model.lazy.number='cache.bombsNumber'
+          @change='validateCache("bombsNumber", 10, cacheBombsLimit)'
         >
       </div>
       <div class='pop-up__section pop-up__section_confirm-buttons'>
         <button 
           class='pop-up__button pop-up__button_confirm'
-          @click='updateSettings(); closePopUp()'
+          @click='
+            updateSettings(cache);
+            closePopUp();
+          '
         >
           Ok
         </button>
@@ -62,6 +74,7 @@
 
 <script>
   import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
 
   export default {
     name: 'popUp',
@@ -77,12 +90,19 @@
     computed: {
       ...mapState([
         'settings'
-      ])
+      ]),
+      cacheBombsLimit() {
+        return this.cache.colsNumber * this.cache.rowsNumber - 9
+      }
     },
     created() {
       Object.assign(this.cache, this.settings)
     },
     methods: {
+      ...mapMutations([
+        'closePopUp',
+        'updateSettings'
+      ]),
       selectDifficulty(difficulty) {
         switch (difficulty) {
           case 'Easy':
@@ -108,11 +128,10 @@
             break;
         }
       },
-      closePopUp() {
-        this.$store.commit('closePopUp')
-      },
-      updateSettings() {
-        this.$store.commit('updateSettings', this.cache)
+      validateCache(property, min, max) {
+        let cache = this.cache;
+        if (cache[property] < min) cache[property] = min;
+        if (cache[property] > max) cache[property] = max;
       }
     }
   }
