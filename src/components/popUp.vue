@@ -137,7 +137,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .PopUp {
     width: 100%;
     height: 100%;

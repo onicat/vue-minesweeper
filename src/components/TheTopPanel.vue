@@ -85,7 +85,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .TheTopPanel {
     height: 70px;
     background-color: #2196F3;

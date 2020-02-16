@@ -37,7 +37,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .App {
     width: 100%;
     height: 100%;
@@ -51,7 +51,9 @@
     overflow: auto;
     display: flex; /* With auto margin for children to avoid pruning elements with overflow*/
   }
+</style>
 
+<style scoped>
   .fade-enter-active, .fade-leave-active {
     transition: opacity .1s;
   }

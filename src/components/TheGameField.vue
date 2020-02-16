@@ -24,7 +24,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .TheGameField {
     display: grid;
     margin: 2px auto 0;
