@@ -40,37 +40,34 @@
     data() {
       return {
         time: 0,
-        timerId: null
+        timerId: null,
+        restartButtonClass: 'TheTopPanel__button_thinking'
       }
     },
     computed: {
       ...mapState({
         'stage': 'stage',
         'bombsNumber': state => state.settings.bombsNumber
-      }),
-      restartButtonClass() {
-        switch (this.stage) {
-          case 'win':
-            return "TheTopPanel__button_cool";
-          case 'losing':
-            return "TheTopPanel__button_angry";
-          default:
-            return "TheTopPanel__button_thinking";
-        }
-      }
+      })
     },
     watch: {
       stage(value) {
         switch (value) {
           case 'win':
+            this.restartButtonClass = 'TheTopPanel__button_cool';
+            clearInterval(this.timerId);
+            break;
           case 'losing':
+            this.restartButtonClass = 'TheTopPanel__button_angry'
             clearInterval(this.timerId);
             break;
           case 'start':
+            this.restartButtonClass = 'TheTopPanel__button_thinking';
             clearInterval(this.timerId);
             this.time = 0;
             break;
           case 'game':
+            this.restartButtonClass = 'TheTopPanel__button_thinking';
             this.timerId = setInterval(() => this.time++, 1000);
             break;
         }
