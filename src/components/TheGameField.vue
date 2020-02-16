@@ -1,5 +1,5 @@
 <template>
-  <div class='game-field'
+  <div class='TheGameField'
     :style='{
       gridTemplateRows: `repeat(${$store.state.settings.rowsNumber}, 30px)`,
       gridTemplateColumns: `repeat(${$store.state.settings.colsNumber}, 30px)`
@@ -25,7 +25,7 @@
 </script>
 
 <style scoped>
-  .game-field {
+  .TheGameField {
     display: grid;
     margin: 2px auto 0;
     grid-gap: 2px; /* for old browser */

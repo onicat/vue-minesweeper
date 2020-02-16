@@ -1,45 +1,51 @@
 <template>
-  <div id='app'>
+  <div class='App' id='App'>
     <TheTopPanel/>
-    <div class='field-stage'>
+    <div class='App__field-stage'>
       <TheGameField/>
     </div>
     <transition name='fade'>
-      <PopUp v-if='$store.state.popUp'/>
+      <PopUp v-if='popUp'/>
     </transition>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import TheTopPanel from '@/components/TheTopPanel.vue';
   import TheGameField from '@/components/TheGameField.vue';
   import PopUp from '@/components/PopUp.vue';
 
   export default {
     name: 'App',
-    created: function() {
-      window.addEventListener('contextmenu', (event) => {
-        event.preventDefault()
-      });
-      this.$store.commit('generateField');
-    },
     components: {
       TheTopPanel,
       TheGameField,
       PopUp
+    },
+    computed: {
+      ...mapState([
+        'popUp'
+      ])
+    },
+    created() {
+      window.addEventListener('contextmenu', (event) => {
+        event.preventDefault()
+      });
+      this.$store.commit('generateField');
     }
   }
 </script>
 
 <style scoped>
-  #app {
+  .App {
     width: 100%;
     height: 100%;
     background-color: #303130;
     position: relative;
   }
 
-  .field-stage {
+  .App__field-stage {
     width: 100%;
     height: calc(100% - 70px); /* 70px - height of topPanel */
     overflow: auto;

@@ -1,31 +1,31 @@
 <template>
-  <div class='pop-up'>
-    <div class='pop-up__window'>
-      <h2 class='pop-up__title'>Settings</h2>
-      <div class='pop-up__section'>
+  <div class='PopUp'>
+    <div class='PopUp__window'>
+      <h2 class='PopUp__title'>Settings</h2>
+      <div class='PopUp__section'>
         <button 
-          class='pop-up__button pop-up__button_difficulty'
+          class='PopUp__button PopUp__button_difficulty'
           @click='selectDifficulty("Easy")'
         >
           Easy
         </button>
         <button 
-          class='pop-up__button pop-up__button_difficulty'
+          class='PopUp__button PopUp__button_difficulty'
           @click='selectDifficulty("Medium")'
         >
           Medium
         </button>
         <button 
-          class='pop-up__button pop-up__button_difficulty'
+          class='PopUp__button PopUp__button_difficulty'
           @click='selectDifficulty("Expert")'
         >
           Expert
         </button>
       </div>
-      <div class='pop-up__section pop-up__section_input'>
+      <div class='PopUp__section PopUp__section_input'>
         Width:
         <input 
-          class='pop-up__input'
+          class='PopUp__input'
           type='number'
           v-model.lazy.number='cache.colsNumber'
           @change='
@@ -35,7 +35,7 @@
         >
         Height:
         <input 
-          class='pop-up__input'
+          class='PopUp__input'
           type='number'
           v-model.lazy.number='cache.rowsNumber'
           @change='
@@ -45,15 +45,15 @@
         >
         Bombs:
         <input 
-          class='pop-up__input'
+          class='PopUp__input'
           type='number'
           v-model.lazy.number='cache.bombsNumber'
           @change='validateCache("bombsNumber", 10, cacheBombsLimit)'
         >
       </div>
-      <div class='pop-up__section pop-up__section_confirm-buttons'>
+      <div class='PopUp__section PopUp__section_confirm-buttons'>
         <button 
-          class='pop-up__button pop-up__button_confirm'
+          class='PopUp__button PopUp__button_confirm'
           @click='
             updateSettings(cache);
             closePopUp();
@@ -62,7 +62,7 @@
           Ok
         </button>
         <button 
-          class='pop-up__button pop-up__button_confirm'
+          class='PopUp__button PopUp__button_confirm'
           @click='closePopUp()'
         >
           Cancel
@@ -138,7 +138,7 @@
 </script>
 
 <style scoped>
-  .pop-up {
+  .PopUp {
     width: 100%;
     height: 100%;
     text-align: center;
@@ -149,7 +149,7 @@
     overflow: auto;
   }
 
-  .pop-up__window {
+  .PopUp__window {
     width: 90%;
     max-width: 400px;
     height: 90%;
@@ -167,27 +167,27 @@
     overflow: auto;
   }
 
-  .pop-up__title {
+  .PopUp__title {
     margin: 15px 0;
     font-size: 2em;
   }
 
-  .pop-up__section {
+  .PopUp__section {
     display: flex;
     justify-content: center;
   }
 
-  .pop-up__section_confirm-buttons {
+  .PopUp__section_confirm-buttons {
     margin-top: 20px;
   }
 
-  .pop-up__section_input {
+  .PopUp__section_input {
     margin-top: 10px;
     flex-direction: column;
     align-items: center;
   }
 
-  .pop-up__button {
+  .PopUp__button {
     border: 1px solid #303130;
     padding: 0;
     border-radius: 5px;
@@ -200,22 +200,22 @@
     margin: 0 10px;
   }
 
-  .pop-up__button:active {
+  .PopUp__button:active {
     background-color: #1976D2;
     padding-top: 3px;
   }
 
-  .pop-up__button_difficulty {
+  .PopUp__button_difficulty {
     width: 100px;
     height: 40px;
   }
 
-  .pop-up__button_confirm {
+  .PopUp__button_confirm {
     width: 150px;
     height: 50px;
   }
 
-  .pop-up__input {
+  .PopUp__input {
     width: 40%;
     margin-bottom: 10px;
     padding: 5px 10px; 

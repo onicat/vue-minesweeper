@@ -1,100 +1,99 @@
 <template>
-  <div class='top-panel'>
+  <div class='TheTopPanel'>
     <img 
       src='@/assets/img/128/clock-icon.png'
-      class='top-panel__icon top-panel__icon_clock'
+      class='TheTopPanel__icon TheTopPanel__icon_clock'
     >
     <img 
       src='@/assets/img/128/bomb-icon.png'
-      class='top-panel__icon top-panel__icon_bomb'
+      class='TheTopPanel__icon TheTopPanel__icon_bomb'
     >
     <div 
-      class='top-panel__button top-panel__button_settings'
+      class='TheTopPanel__button TheTopPanel__button_settings'
       @click='showPopUp("settings")'
     >
     </div>
-    <h2 class='top-panel__counter top-panel__counter_bombs'>
+    <h2 class='TheTopPanel__counter TheTopPanel__counter_bombs'>
       {{ bombsNumber }}
     </h2>
     <div 
-      class='top-panel__button'
+      class='TheTopPanel__button'
       :class='[restartButtonClass]'
       @click='restart'
     >
     </div>
-    <h2 class='top-panel__counter top-panel__counter_time'>
+    <h2 class='TheTopPanel__counter TheTopPanel__counter_time'>
       {{ time }}
     </h2>
     <div 
-      class='top-panel__button top-panel__button_ref'>
+      class='TheTopPanel__button TheTopPanel__button_ref'>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'TheTopPanel',
-  data() {
-    return {
-      time: 0,
-      timerId: null
-    }
-  },
-  methods: {
-    restart() {
-      this.$store.commit("restart")
-    },
-    showPopUp(popUpName) {
-      this.$store.commit('showPopUp', popUpName)
-    }
-  },
-  computed: {
-    stage() {
-      return this.$store.state.stage
-    },
-    bombsNumber() {
-      return this.$store.state.settings.bombsNumber
-    },
-    restartButtonClass() {
-      switch (this.$store.state.stage) {
-        case 'win':
-          return "top-panel__button_cool";
-        case 'losing':
-          return "top-panel__button_angry";
-        default:
-          return "top-panel__button_thinking";
+  import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
+
+  export default {
+    name: 'TheTopPanel',
+    data() {
+      return {
+        time: 0,
+        timerId: null
       }
-    }
-  },
-  watch: {
-    stage: function(value) {
-      switch (value) {
-        case 'win':
-        case 'losing':
-          clearInterval(this.timerId);
-          break;
-        case 'start':
-          clearInterval(this.timerId);
-          this.time = 0;
-          break;
-        case 'game':
-          this.timerId = setInterval(() => this.time++, 1000);
-          break;
+    },
+    computed: {
+      ...mapState({
+        'stage': 'stage',
+        'bombsNumber': state => state.settings.bombsNumber
+      }),
+      restartButtonClass() {
+        switch (this.stage) {
+          case 'win':
+            return "TheTopPanel__button_cool";
+          case 'losing':
+            return "TheTopPanel__button_angry";
+          default:
+            return "TheTopPanel__button_thinking";
+        }
       }
-    }
-  },
-  mounted() {
-    window.addEventListener('keyup', event => {
-      if (event.code == 'F2') {
-        this.restart()
+    },
+    watch: {
+      stage(value) {
+        switch (value) {
+          case 'win':
+          case 'losing':
+            clearInterval(this.timerId);
+            break;
+          case 'start':
+            clearInterval(this.timerId);
+            this.time = 0;
+            break;
+          case 'game':
+            this.timerId = setInterval(() => this.time++, 1000);
+            break;
+        }
       }
-    })
+    },
+    created() {
+      window.addEventListener('keyup', event => {
+        if (event.code == 'F2') {
+          this.restart()
+        }
+      })
+    },
+    methods: {
+      ...mapMutations([
+        'restart',
+        'showPopUp'
+      ])
+    }
   }
-}
 </script>
 
 <style scoped>
-  .top-panel {
+  .TheTopPanel {
     height: 70px;
     background-color: #2196F3;
     box-shadow: inset 0 -5px #1976D2;
@@ -103,48 +102,48 @@ export default {
     justify-content: center;
   }
 
-  .top-panel__icon {
+  .TheTopPanel__icon {
     width: 50px;
     height: 50px;
     position: absolute;
   }
 
-  .top-panel__icon_clock {
+  .TheTopPanel__icon_clock {
     transform: translate(20px)
   }
 
-  .top-panel__icon_bomb { 
+  .TheTopPanel__icon_bomb { 
     transform: translate(-20px)
   }
 
-  .top-panel__button {
+  .TheTopPanel__button {
     width: 40px;
     height: 40px;
     position: relative;
     transition: background-image .3s;
   }
 
-  .top-panel__button_thinking {
+  .TheTopPanel__button_thinking {
     background: no-repeat center/100% url(~@/assets/img/128/thinking.png);
   }
   
-  .top-panel__button_angry {
+  .TheTopPanel__button_angry {
     background: no-repeat center/100% url(~@/assets/img/128/angry.png);
   }
 
-  .top-panel__button_cool {
+  .TheTopPanel__button_cool {
     background: no-repeat center/100% url(~@/assets/img/128/cool.png);
   }
 
-  .top-panel__button_settings {
+  .TheTopPanel__button_settings {
     background: no-repeat center/100% url(~@/assets/img/128/settings.png);
   }
 
-  .top-panel__button_ref {
+  .TheTopPanel__button_ref {
     background: no-repeat center/100% url(~@/assets/img/128/ref.png);
   }
 
-  .top-panel__counter {
+  .TheTopPanel__counter {
     max-width: 60px;
     margin: 20px;
     position: relative;
@@ -153,7 +152,7 @@ export default {
     flex-grow: 1;
   }
 
-  .top-panel__counter_bombs {
+  .TheTopPanel__counter_bombs {
     text-align: right;
   }
 </style>

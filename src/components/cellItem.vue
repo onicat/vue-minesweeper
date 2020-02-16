@@ -1,11 +1,11 @@
 <template>
   <div 
-    class='cell-item'
+    class='CellItem'
     :class='{
-      checked: cell.isChecked,
-      flag: cell.isFlagged,
-      explosion: cell.status == -2,
-      bomb: cell.isChecked && cell.status == -1
+      "CellItem_checked": cell.isChecked,
+      "CellItem_flag": cell.isFlagged,
+      "CellItem_explosion": cell.status == -2,
+      "CellItem_bomb": cell.isChecked && cell.status == -1
     }'
     @click='selectCell(cell)'
     @contextmenu='toggleFlag(cell)'
@@ -14,22 +14,24 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
+
   export default {
     name: 'CellItem',
-    props: ['cell'],
+    props: {
+      cell: Object
+    },
     methods: {
-      selectCell(cell) {
-        this.$store.commit('selectCell', cell);
-      },
-      toggleFlag(cell) {
-        this.$store.commit('toggleFlag', cell);
-      }
+      ...mapMutations([
+        'selectCell',
+        'toggleFlag'
+      ])
     }
   }
 </script>
 
 <style scoped>
-  .cell-item {
+  .CellItem {
     background-color: #2196F3;
     box-shadow: inset 0 -3px #1976D2; 
     display: flex;
@@ -41,23 +43,23 @@
     font-size: 1.2em;
   }
 
-  .checked {
+  .CellItem_checked {
     background-color: #1976D2;
   }
 
-  .bomb {
+  .CellItem_bomb {
     background: no-repeat center/80% url(~@/assets/img/64/bomb.png),
               #2196F3;
     box-shadow: none;
   }
 
-  .flag {
+  .CellItem_flag {
     background: no-repeat center/80% url(~@/assets/img/64/flag.png),
               #2196F3;
     box-shadow: none;
   }
 
-  .explosion {
+  .CellItem_explosion {
     background: no-repeat center/80% url(~@/assets/img/64/explosion.png) 
               #2196F3;
     box-shadow: none;
