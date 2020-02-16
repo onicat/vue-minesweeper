@@ -13,7 +13,8 @@ const store = new Vuex.Store({
     cells: [],
     bombsIndexes: new Set(),
     stage: 'start', // start, game, losing, win
-    checkedCellsCounter: 0
+    checkedCellsCounter: 0,
+    flagsCounter: 0
   },
   getters: {
     getAreaSerialIndexes: state => target => {
@@ -92,7 +93,10 @@ const store = new Vuex.Store({
 
         cell.isChecked = true;
         state.checkedCellsCounter++;
-        if (cell.isFlagged) cell.isFlagged = false;
+        if (cell.isFlagged) {
+          cell.isFlagged = false;
+          state.flagsCounter--;
+        }
       }
     },
     installBombs(state, cell) {
@@ -119,6 +123,7 @@ const store = new Vuex.Store({
       state.bombsIndexes.clear();
       state.stage = 'start';
       state.checkedCellsCounter = 0;
+      state.flagsCounter = 0;
 
       if (force) {
         state.cells = [];
@@ -135,6 +140,8 @@ const store = new Vuex.Store({
       if (cell.isChecked ||
           state.stage == 'losing' ||
           state.stage == 'win') return;
+      
+      (cell.isFlagged) ? state.flagsCounter-- : state.flagsCounter++;
       cell.isFlagged = !cell.isFlagged
     },
     toLose(state, cell) {

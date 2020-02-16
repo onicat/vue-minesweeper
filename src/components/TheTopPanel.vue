@@ -1,20 +1,12 @@
 <template>
   <div class='TheTopPanel'>
-    <img 
-      src='@/assets/img/128/clock-icon.png'
-      class='TheTopPanel__icon TheTopPanel__icon_clock'
-    >
-    <img 
-      src='@/assets/img/128/bomb-icon.png'
-      class='TheTopPanel__icon TheTopPanel__icon_bomb'
-    >
     <div 
       class='TheTopPanel__button TheTopPanel__button_settings'
       @click='showPopUp("settings")'
     >
     </div>
-    <h2 class='TheTopPanel__counter TheTopPanel__counter_bombs'>
-      {{ bombsNumber }}
+    <h2 class='TheTopPanel__counter TheTopPanel__counter_flags'>
+      {{ flagsLeft }}
     </h2>
     <div 
       class='TheTopPanel__button'
@@ -47,8 +39,12 @@
     computed: {
       ...mapState({
         'stage': 'stage',
-        'bombsNumber': state => state.settings.bombsNumber
-      })
+        'bombsNumber': state => state.settings.bombsNumber,
+        'flagsCounter': 'flagsCounter'
+      }),
+      flagsLeft() {
+        return this.bombsNumber - this.flagsCounter
+      }
     },
     watch: {
       stage(value) {
@@ -99,20 +95,6 @@
     justify-content: center;
   }
 
-  .TheTopPanel__icon {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-  }
-
-  .TheTopPanel__icon_clock {
-    transform: translate(20px)
-  }
-
-  .TheTopPanel__icon_bomb { 
-    transform: translate(-20px)
-  }
-
   .TheTopPanel__button {
     width: 40px;
     height: 40px;
@@ -145,12 +127,26 @@
     max-width: 50px;
     margin: 0 10px;
     position: relative;
+    text-align: center;
     font-family: Arial;
     color: #303130;
     flex-grow: 1;
   }
 
-  .TheTopPanel__counter_bombs {
-    text-align: right;
+  .TheTopPanel__counter::before {
+    position: absolute;
+    color: #135ba3;
+    font-size: 0.8em;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .TheTopPanel__counter_flags::before {
+    content: 'Flags';
+  }
+
+  .TheTopPanel__counter_time::before {
+    content: 'Time';
   }
 </style>
