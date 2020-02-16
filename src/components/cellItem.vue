@@ -7,25 +7,15 @@
       "CellItem_explosion": cell.status == -2,
       "CellItem_bomb": cell.isChecked && cell.status == -1
     }'
-    @click='selectCell(cell)'
-    @contextmenu='toggleFlag(cell)'
   > {{ (cell.isChecked && cell.status > 0) ? cell.status : null }}
   </div>
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
-
   export default {
     name: 'CellItem',
     props: {
       cell: Object
-    },
-    methods: {
-      ...mapMutations([
-        'selectCell',
-        'toggleFlag'
-      ])
     }
   }
 </script>

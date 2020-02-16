@@ -56,14 +56,15 @@
           class='PopUp__button PopUp__button_confirm'
           @click='
             updateSettings(cache);
-            closePopUp();
+            restart(true);
+            setPopUp(null);
           '
         >
           Ok
         </button>
         <button 
           class='PopUp__button PopUp__button_confirm'
-          @click='closePopUp()'
+          @click='setPopUp(null)'
         >
           Cancel
         </button>
@@ -100,8 +101,9 @@
     },
     methods: {
       ...mapMutations([
-        'closePopUp',
-        'updateSettings'
+        'setPopUp',
+        'updateSettings',
+        'restart'
       ]),
       selectDifficulty(difficulty) {
         switch (difficulty) {

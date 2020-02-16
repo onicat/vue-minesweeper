@@ -57,26 +57,8 @@ const store = new Vuex.Store({
         }
       }  
     },
-    selectCell(state, cell) {
-      if (cell.isFlagged ||
-          state.stage == 'losing' ||
-          state.stage == 'win') return;
-      
-      if (cell.status == -1) {
-        this.commit('toLose', cell);
-        return;
-      }
-
-      if (state.bombsIndexes.size == 0) {
-        state.stage = 'game';
-        this.commit('installBombs', cell);
-      }
-      
-      this.commit('openCells', cell);
-
-      if (this.getters.isWin) {
-        this.commit('toWin')
-      }
+    setStage(state, stage) {
+      state.stage = stage
     },
     openCells(state, cell) {
       let line = [cell.row * state.settings.colsNumber + cell.col];
@@ -137,33 +119,25 @@ const store = new Vuex.Store({
       }
     },
     toggleFlag(state, cell) {
-      if (cell.isChecked ||
-          state.stage == 'losing' ||
-          state.stage == 'win') return;
-      
       (cell.isFlagged) ? state.flagsCounter-- : state.flagsCounter++;
       cell.isFlagged = !cell.isFlagged
     },
     toLose(state, cell) {
-      state.stage = 'losing';
+      this.commit('setStage', 'losing');
       cell.status = -2;
 
       for (let index of state.bombsIndexes) {
         state.cells[index].isChecked = true;
       }
     },
-    toWin(state) {
-      state.stage = 'win'
+    toWin() {
+      this.commit('setStage', 'win');
     },
-    showPopUp(state, popUp) {
+    setPopUp(state, popUp) {
       state.popUp = popUp
-    },
-    closePopUp(state) {
-      state.popUp = null
     },
     updateSettings(state, settings) {
       Object.assign(state.settings, settings);
-      this.commit('restart', true);
     }
   }
 });

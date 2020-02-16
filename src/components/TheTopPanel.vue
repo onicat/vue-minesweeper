@@ -2,7 +2,7 @@
   <div class='TheTopPanel'>
     <div 
       class='TheTopPanel__button TheTopPanel__button_settings'
-      @click='showPopUp("settings")'
+      @click='setPopUp("settings")'
     >
     </div>
     <h2 class='TheTopPanel__counter TheTopPanel__counter_flags'>
@@ -79,7 +79,7 @@
     methods: {
       ...mapMutations([
         'restart',
-        'showPopUp'
+        'setPopUp'
       ])
     }
   }
