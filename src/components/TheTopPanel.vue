@@ -116,6 +116,7 @@
   .TheTopPanel__button {
     width: 40px;
     height: 40px;
+    margin: 0 10px;
     position: relative;
     transition: background-image .3s;
   }
@@ -141,8 +142,8 @@
   }
 
   .TheTopPanel__counter {
-    max-width: 60px;
-    margin: 20px;
+    max-width: 50px;
+    margin: 0 10px;
     position: relative;
     font-family: Arial;
     color: #303130;
