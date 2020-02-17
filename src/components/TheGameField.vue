@@ -1,8 +1,8 @@
 <template>
   <div class='TheGameField'
     :style='{
-      gridTemplateRows: `repeat(${rowsNumber}, 30px)`,
-      gridTemplateColumns: `repeat(${colsNumber}, 30px)`
+      gridTemplateRows: `repeat(${settings.rowsNumber}, 30px)`,
+      gridTemplateColumns: `repeat(${settings.colsNumber}, 30px)`
     }'
   >
     <CellItem
@@ -27,23 +27,25 @@
       CellItem
     },
     computed: {
-      ...mapState({
-        'rowsNumber': state => state.settings.rowsNumber,
-        'colsNumber': state => state.settings.colsNumber,
-        'stage': 'stage'
-      }),
+      ...mapState([
+        'settings',
+        'stage',
+        'cells'
+      ]),
       ...mapGetters([
-        'isWin'
+        'isWin',
+        'getAreaSerialIndexes'
       ])
     },
     methods: {
       ...mapMutations([
         'toggleFlag',
         'toLose',
-        'installBombs',
         'openCells',
         'toWin',
-        'setStage'
+        'setStage',
+        'updateBombsIndexes',
+        'updateBombsAreas'
       ]),
       alternativeSelectCell(cell) {
         if (this.stage == 'losing' || this.stage == 'win') {
@@ -75,6 +77,26 @@
         if (this.isWin) {
           this.toWin()
         }
+      },
+      installBombs(cell) {
+        let clickArea = this.getAreaSerialIndexes(cell);
+        let indexes = [];
+        let cells = this.cells;
+        
+        clickArea.push(cell.row * this.settings.colsNumber + cell.col);
+      
+        while (indexes.length < this.settings.bombsNumber) {
+          let index = Math.floor(Math.random() * cells.length);
+
+          if (clickArea.includes(index) || indexes.includes(index)) {
+            continue
+          }
+
+          indexes.push(index);
+        }
+
+        this.updateBombsIndexes(indexes);
+        this.updateBombsAreas();
       }
     }
   }
