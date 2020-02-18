@@ -32,12 +32,17 @@
       ...mapState([
         'settings',
         'stage',
-        'cells'
+        'cells',
+        'checkedCellsCounter',
+        'bombsIndexes'
       ]),
       ...mapGetters([
-        'isWin',
         'getAreaSerialIndexes'
-      ])
+      ]),
+      isWin() {
+        let uncheckedLeft = this.cells.length - this.checkedCellsCounter;
+        return (uncheckedLeft == this.bombsIndexes.length) ? true : false; 
+      }
     },
     created() {
       this.fieldGenerator_generateField()

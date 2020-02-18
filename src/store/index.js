@@ -35,10 +35,6 @@ const store = new Vuex.Store({
       }
 
       return area;
-    },
-    isWin: state => {
-      let uncheckedLeft = state.cells.length - state.checkedCellsCounter;
-      return (uncheckedLeft == state.bombsIndexes.length) ? true : false; 
     }
   },
   mutations: {
