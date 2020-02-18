@@ -32,7 +32,6 @@
       window.addEventListener('contextmenu', (event) => {
         event.preventDefault()
       });
-      this.$store.commit('generateField');
     }
   }
 </script>

@@ -26,9 +26,11 @@
 <script>
   import { mapState } from 'vuex';
   import { mapMutations } from 'vuex';
+  import fieldGenerator from '@/mixins/fieldGenerator.js';
 
   export default {
     name: 'TheTopPanel',
+    mixins: [fieldGenerator],
     data() {
       return {
         time: 0,
@@ -78,9 +80,14 @@
     },
     methods: {
       ...mapMutations([
-        'restart',
-        'setPopUp'
-      ])
+        'setPopUp',
+        'updateCells',
+        'reset'
+      ]),
+      restart() {
+        this.reset();
+        this.fieldGenerator_generateField();
+      }
     }
   }
 </script>

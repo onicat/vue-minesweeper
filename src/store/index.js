@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     popUp: null,
     cells: [],
     bombsIndexes: [],
-    stage: 'start', // start, game, losing, win
+    stage: 'start', // start (without bombs), game, losing, win
     checkedCellsCounter: 0,
     flagsCounter: 0
   },
@@ -42,65 +42,30 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    generateField(state) {
-      for (let row = 0; row < state.settings.rowsNumber; row++) {
-        for (let col = 0; col < state.settings.colsNumber; col++) {
-          let cell = {
-            row,
-            col,
-            status: 0, /* -2 - explosion, -1 - bomb, else bombs around */
-            isChecked: false,
-            isFlagged: false
-          };
-
-          state.cells.push(cell);
-        }
-      }  
+    updateCells(state, cells) {
+      state.cells = cells;
     },
     setStage(state, stage) {
       state.stage = stage
     },
-    openCells(state, cell) {
-      let line = [cell.row * state.settings.colsNumber + cell.col];
-      let cells = state.cells;
-
-      while (line.length > 0) {
-        let cell = cells[line[line.length - 1]];
-
-        line.pop();
-        if (cell.isChecked) continue;
-        if (cell.status == 0) {
-          line.push(...this.getters.getAreaSerialIndexes(cell));
-        }
-
-        cell.isChecked = true;
-        state.checkedCellsCounter++;
-        if (cell.isFlagged) {
-          cell.isFlagged = false;
-          state.flagsCounter--;
-        }
-      }
+    toCheckCell(state, cell) {
+      cell.isChecked = true;
+      state.checkedCellsCounter++;
     },
-    updateBombsIndexes(state, indexes) {
+    updateBombsSystem(state, indexes) {
       let cells = state.cells;
-
       for (let index of indexes) {
         cells[index].status = -1;
         state.bombsIndexes.push(index);
-      }
-    },
-    updateBombsAreas(state) {
-      let cells = state.cells;
-      for (let bombIndex of state.bombsIndexes) {
-        let bombArea = this.getters.getAreaSerialIndexes(cells[bombIndex]);
 
+        let bombArea = this.getters.getAreaSerialIndexes(cells[index]);
         for (let index of bombArea) {
           let cell = cells[index];
           if (cell.status != -1) cell.status++
         }
       }
     },
-    restart(state, force) {
+    reset(state, force) {
       state.bombsIndexes = [];
       this.commit('setStage', 'start');
       state.checkedCellsCounter = 0;
@@ -108,7 +73,6 @@ const store = new Vuex.Store({
 
       if (force) {
         state.cells = [];
-        this.commit('generateField')
       } else {
         for (let cell of state.cells) {
           cell.isChecked = false;
@@ -122,15 +86,15 @@ const store = new Vuex.Store({
       cell.isFlagged = !cell.isFlagged
     },
     toLose(state, cell) {
-      this.commit('setStage', 'losing');
+      state.stage = 'losing';
       cell.status = -2;
 
       for (let index of state.bombsIndexes) {
         state.cells[index].isChecked = true;
       }
     },
-    toWin() {
-      this.commit('setStage', 'win');
+    toWin(state) {
+      state.stage = 'win'
     },
     setPopUp(state, popUp) {
       state.popUp = popUp

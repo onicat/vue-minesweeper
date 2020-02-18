@@ -20,9 +20,11 @@
   import { mapMutations } from 'vuex';
   import { mapGetters } from 'vuex';
   import CellItem from '@/components/CellItem.vue';
+  import fieldGenerator from '@/mixins/fieldGenerator.js';
 
   export default {
     name: 'TheGameField',
+    mixins: [fieldGenerator],
     components: {
       CellItem
     },
@@ -37,15 +39,17 @@
         'getAreaSerialIndexes'
       ])
     },
+    created() {
+      this.fieldGenerator_generateField()
+    },
     methods: {
       ...mapMutations([
         'toggleFlag',
         'toLose',
-        'openCells',
+        'toCheckCell',
         'toWin',
         'setStage',
-        'updateBombsIndexes',
-        'updateBombsAreas'
+        'updateBombsSystem'
       ]),
       alternativeSelectCell(cell) {
         if (this.stage == 'losing' || this.stage == 'win') {
@@ -95,8 +99,27 @@
           indexes.push(index);
         }
 
-        this.updateBombsIndexes(indexes);
-        this.updateBombsAreas();
+        this.updateBombsSystem(indexes);
+      },
+      openCells(cell) {
+        let line = [cell.row * this.settings.colsNumber + cell.col];
+        let cells = this.cells;
+
+        while (line.length > 0) {
+          let cell = cells[line[line.length - 1]];
+
+          line.pop();
+          if (cell.isChecked) continue;
+          if (cell.status == 0) {
+            line.push(...this.getAreaSerialIndexes(cell));
+          }
+          
+          this.toCheckCell(cell);
+          
+          if (cell.isFlagged) {
+            this.toggleFlag(cell)
+          }
+        }
       }
     }
   }

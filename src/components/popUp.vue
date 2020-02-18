@@ -76,9 +76,11 @@
 <script>
   import { mapState } from 'vuex';
   import { mapMutations } from 'vuex';
+  import fieldGenerator from '@/mixins/fieldGenerator.js';
 
   export default {
     name: 'PopUp',
+    mixins: [fieldGenerator],
     data() {
       return {
         cache: {
@@ -103,7 +105,7 @@
       ...mapMutations([
         'setPopUp',
         'updateSettings',
-        'restart'
+        'reset'
       ]),
       selectDifficulty(difficulty) {
         switch (difficulty) {
@@ -134,6 +136,10 @@
         let cache = this.cache;
         if (cache[property] < min) cache[property] = min;
         if (cache[property] > max) cache[property] = max;
+      },
+      restart() {
+        this.reset(true);
+        this.fieldGenerator_generateField()
       }
     }
   }
