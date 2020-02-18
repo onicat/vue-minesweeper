@@ -124,6 +124,11 @@
 
   .TheTopPanel__button_settings {
     background: no-repeat center/100% url(~@/assets/img/128/settings.png);
+    transition: transform 0.3s
+  }
+
+  .TheTopPanel__button_settings:active {
+    transform: rotate(360deg)
   }
 
   .TheTopPanel__button_ref {
