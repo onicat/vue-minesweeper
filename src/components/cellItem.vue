@@ -2,6 +2,8 @@
   <div 
     class='CellItem'
     :class='{
+      "CellItem_lighted_green": isLighted && cell.status != -1,
+      "CellItem_lighted_red": isLighted && cell.status == -1,
       "CellItem_checked": cell.isChecked,
       "CellItem_flag": cell.isFlagged,
       "CellItem_explosion": cell.status == -2,
@@ -15,7 +17,8 @@
   export default {
     name: 'CellItem',
     props: {
-      cell: Object
+      cell: Object,
+      isLighted: Boolean
     }
   }
 </script>
@@ -53,5 +56,15 @@
     background: no-repeat center/80% url(~@/assets/img/64/explosion.png) 
               #2196F3;
     box-shadow: none;
+  }
+
+  .CellItem_lighted_green {
+    box-shadow: inset 0px 0px 5px 2px #8BC34A;
+    transition: box-shadow .3s;
+  }
+
+  .CellItem_lighted_red {
+    box-shadow: inset 0px 0px 5px 2px #E91E63;
+    transition: box-shadow .3s;
   }
 </style>

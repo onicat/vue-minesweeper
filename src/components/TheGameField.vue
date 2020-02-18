@@ -9,6 +9,7 @@
       v-for='(cell, index) in $store.state.cells'
       :cell='cell'
       :key='index'
+      :isLighted='lightedCellIndexes.includes(index)'
       @click.native='selectCell(cell)'
       @contextmenu.native='alternativeSelectCell(cell)'
     />
@@ -24,9 +25,15 @@
 
   export default {
     name: 'TheGameField',
-    mixins: [fieldGenerator],
     components: {
       CellItem
+    },
+    mixins: [fieldGenerator],
+    data() {
+      return {
+        lightedCellIndexes: [],
+        lightingTimer: null
+      }
     },
     computed: {
       ...mapState([
@@ -42,6 +49,12 @@
       isWin() {
         let uncheckedLeft = this.cells.length - this.checkedCellsCounter;
         return (uncheckedLeft == this.bombsIndexes.length) ? true : false; 
+      }
+    },
+    watch: {
+      stage() {
+        this.lightedCellIndexes = [];
+        clearTimeout(this.lightingTimer);
       }
     },
     created() {
@@ -61,7 +74,13 @@
           return
         }
       
-        if (!cell.isChecked) {
+        if (cell.isChecked) {
+          
+          if (this.lightedCellIndexes.length != 0) return;
+          this.lightedCellIndexes.push(...this.getAreaSerialIndexes(cell));
+          this.lightingTimer = setTimeout(() => this.lightedCellIndexes = [], 10000);
+        
+        } else {
           this.toggleFlag(cell);
         }
       },
