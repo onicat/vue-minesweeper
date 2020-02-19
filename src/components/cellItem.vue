@@ -7,7 +7,7 @@
       "CellItem_checked": cell.isChecked,
       "CellItem_flag": cell.isFlagged,
       "CellItem_explosion": cell.status == -2,
-      "CellItem_bomb": cell.isChecked && cell.status == -1
+      "CellItem_mine": cell.isChecked && cell.status == -1
     }'
   > {{ (cell.isChecked && cell.status > 0) ? cell.status : null }}
   </div>
@@ -40,7 +40,7 @@
     background-color: #1976D2;
   }
 
-  .CellItem_bomb {
+  .CellItem_mine {
     background: no-repeat center/80% url(~@/assets/img/64/bomb.png),
               #2196F3;
     box-shadow: none;

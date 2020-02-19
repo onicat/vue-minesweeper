@@ -7,12 +7,12 @@ const store = new Vuex.Store({
     settings: {
       rowsNumber: 9,
       colsNumber: 9,
-      bombsNumber: 10
+      minesNumber: 10
     },
     popUp: null,
     cells: [],
-    bombsIndexes: [],
-    stage: 'start', // start (without bombs), game, losing, win
+    minesIndexes: [],
+    stage: 'start', // start (without mines), game, losing, win
     checkedCellsCounter: 0,
     flagsCounter: 0
   },
@@ -48,21 +48,21 @@ const store = new Vuex.Store({
       cell.isChecked = true;
       state.checkedCellsCounter++;
     },
-    updateBombsSystem(state, indexes) {
+    updateMinesSystem(state, indexes) {
       let cells = state.cells;
       for (let index of indexes) {
         cells[index].status = -1;
-        state.bombsIndexes.push(index);
+        state.minesIndexes.push(index);
 
-        let bombArea = this.getters.getAreaSerialIndexes(cells[index]);
-        for (let index of bombArea) {
+        let mineArea = this.getters.getAreaSerialIndexes(cells[index]);
+        for (let index of mineArea) {
           let cell = cells[index];
           if (cell.status != -1) cell.status++
         }
       }
     },
     reset(state, force) {
-      state.bombsIndexes = [];
+      state.minesIndexes = [];
       this.commit('setStage', 'start');
       state.checkedCellsCounter = 0;
       state.flagsCounter = 0;
@@ -85,10 +85,10 @@ const store = new Vuex.Store({
       state.stage = 'losing';
       cell.status = -2;
 
-      for (let index of state.bombsIndexes) {
+      for (let index of state.minesIndexes) {
         state.cells[index].isChecked = true;
       }
-    },
+    },  
     toWin(state) {
       state.stage = 'win'
     },

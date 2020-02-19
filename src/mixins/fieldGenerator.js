@@ -20,7 +20,7 @@ export default {
           let cell = {
             row,
             col,
-            status: 0, /* -2 - explosion, -1 - bomb, else bombs around */
+            status: 0, /* -2 - explosion, -1 - mine, else bombs around */
             isChecked: false,
             isFlagged: false
           };

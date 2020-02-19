@@ -41,14 +41,14 @@
         'stage',
         'cells',
         'checkedCellsCounter',
-        'bombsIndexes'
+        'minesIndexes'
       ]),
       ...mapGetters([
         'getAreaSerialIndexes'
       ]),
       isWin() {
         let uncheckedLeft = this.cells.length - this.checkedCellsCounter;
-        return (uncheckedLeft == this.bombsIndexes.length) ? true : false; 
+        return (uncheckedLeft == this.minesIndexes.length) ? true : false; 
       }
     },
     watch: {
@@ -67,7 +67,7 @@
         'toCheckCell',
         'toWin',
         'setStage',
-        'updateBombsSystem'
+        'updateMinesSystem'
       ]),
       alternativeSelectCell(cell) {
         if (this.stage == 'losing' || this.stage == 'win') {
@@ -93,7 +93,7 @@
 
         if (this.stage == 'start') {
           this.setStage('game');
-          this.installBombs(cell);
+          this.installMines(cell);
         }
 
         if (cell.status == -1) {
@@ -106,14 +106,14 @@
           this.toWin()
         }
       },
-      installBombs(cell) {
+      installMines(cell) {
         let clickArea = this.getAreaSerialIndexes(cell);
         let indexes = [];
         let cells = this.cells;
         
         clickArea.push(cell.row * this.settings.colsNumber + cell.col);
       
-        while (indexes.length < this.settings.bombsNumber) {
+        while (indexes.length < this.settings.minesNumber) {
           let index = Math.floor(Math.random() * cells.length);
 
           if (clickArea.includes(index) || indexes.includes(index)) {
@@ -123,7 +123,7 @@
           indexes.push(index);
         }
 
-        this.updateBombsSystem(indexes);
+        this.updateMinesSystem(indexes);
       },
       openCells(cell) {
         let line = [cell.row * this.settings.colsNumber + cell.col];

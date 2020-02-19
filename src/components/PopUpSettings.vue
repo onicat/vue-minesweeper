@@ -29,7 +29,7 @@
         v-model.lazy.number='cache.colsNumber'
         @change='
           validateCache("colsNumber", 9, 100);
-          validateCache("bombsNumber", 10, bombsLimit);
+          validateCache("minesNumber", 10, minesLimit);
         '
       >
       Height:
@@ -39,15 +39,15 @@
         v-model.lazy.number='cache.rowsNumber'
         @change='
           validateCache("rowsNumber", 9, 100);
-          validateCache("bombsNumber", 10, bombsLimit);
+          validateCache("minesNumber", 10, minesLimit);
         '
       >
-      Bombs:
+      Mines:
       <input 
         class='PopUpSettings__input'
         type="number"
-        v-model.lazy.number='cache.bombsNumber'
-        @change='validateCache("bombsNumber", 10, bombsLimit)'
+        v-model.lazy.number='cache.minesNumber'
+        @change='validateCache("minesNumber", 10, minesLimit)'
       >
     </div>
     <div class='PopUpSettings__section'>
@@ -90,7 +90,7 @@
         cache: {
           rowsNumber: null,
           colsNumber: null,
-          bombsNumber: null
+          minesNumber: null
         }
       }
     },
@@ -98,7 +98,7 @@
       ...mapState([
         'settings'
       ]),
-      bombsLimit() {
+      minesLimit() {
         return this.cache.colsNumber * this.cache.rowsNumber - 9
       }
     },
@@ -117,21 +117,21 @@
             this.cache = {
               rowsNumber: 9,
               colsNumber: 9,
-              bombsNumber: 10
+              minesNumber: 10
             };
             break;
           case 'Medium':
             this.cache = {
               rowsNumber: 16,
               colsNumber: 16,
-              bombsNumber: 40
+              minesNumber: 40
             };
             break;
           case 'Expert':
             this.cache = {
               rowsNumber: 16,
               colsNumber: 30,
-              bombsNumber: 99
+              minesNumber: 99
             };
             break;
         }

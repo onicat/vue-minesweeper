@@ -41,11 +41,11 @@
     computed: {
       ...mapState({
         'stage': 'stage',
-        'bombsNumber': state => state.settings.bombsNumber,
+        'minesNumber': state => state.settings.minesNumber,
         'flagsCounter': 'flagsCounter'
       }),
       flagsLeft() {
-        return this.bombsNumber - this.flagsCounter
+        return this.minesNumber - this.flagsCounter
       }
     },
     watch: {
