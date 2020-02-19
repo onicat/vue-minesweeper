@@ -5,7 +5,7 @@
       <TheGameField/>
     </div>
     <transition name='fade'>
-      <PopUp v-if='popUp'/>
+      <PopUpSettings v-if='popUp == "settings"'/>
     </transition>
   </div>
 </template>
@@ -14,14 +14,14 @@
   import { mapState } from 'vuex';
   import TheTopPanel from '@/components/TheTopPanel.vue';
   import TheGameField from '@/components/TheGameField.vue';
-  import PopUp from '@/components/PopUp.vue';
+  import PopUpSettings from '@/components/PopUpSettings.vue';
 
   export default {
     name: 'App',
     components: {
       TheTopPanel,
       TheGameField,
-      PopUp
+      PopUpSettings
     },
     computed: {
       ...mapState([
