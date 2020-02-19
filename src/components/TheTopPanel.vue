@@ -107,7 +107,6 @@
     height: 40px;
     margin: 0 10px;
     position: relative;
-    cursor: pointer;
     transition: background-image .3s;
   }
 

@@ -53,7 +53,6 @@
     font-size: 1.2em;
     flex-flow: 1;
     margin: 0 10px;
-    cursor: pointer;
   }
 
   .BasePopUp__button:active {
