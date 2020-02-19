@@ -107,7 +107,11 @@
     height: 40px;
     margin: 0 10px;
     position: relative;
-    transition: background-image .3s;
+    transition: all .3s;
+  }
+
+  .TheTopPanel__button:active {
+    transform: scale(1.2);
   }
 
   .TheTopPanel__button_thinking {
