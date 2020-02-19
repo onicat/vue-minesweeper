@@ -32,6 +32,9 @@
       window.addEventListener('contextmenu', (event) => {
         event.preventDefault()
       });
+      window.addEventListener('selectstart', (event) => {
+        event.preventDefault()
+      });
     }
   }
 </script>
