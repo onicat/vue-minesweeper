@@ -31,7 +31,6 @@
     left: 0;
     top: 0;
     background: rgba(0, 0, 0, 0.5);
-    overflow: auto;
   }
 
   .BasePopUp__window {
@@ -39,7 +38,6 @@
     max-width: 400px;
     height: 90%;
     max-height: 400px;
-    padding: 10px 0;
     position: absolute;
     left: 50%;
     top: 50%;

@@ -38,24 +38,22 @@
 
   .CellItem_checked {
     background-color: #1976D2;
+    box-shadow: none;
   }
 
   .CellItem_mine {
-    background: no-repeat center/80% url(~@/assets/img/64/bomb.png),
+    background: no-repeat center/70% url(~@/assets/img/64/bomb.png),
               #2196F3;
-    box-shadow: none;
   }
 
   .CellItem_flag {
-    background: no-repeat center/80% url(~@/assets/img/64/flag.png),
+    background: no-repeat center/70% url(~@/assets/img/64/flag.png),
               #2196F3;
-    box-shadow: none;
   }
 
   .CellItem_explosion {
-    background: no-repeat center/80% url(~@/assets/img/64/explosion.png) 
+    background: no-repeat center/70% url(~@/assets/img/64/explosion.png) 
               #2196F3;
-    box-shadow: none;
   }
 
   .CellItem_lighted_green {
