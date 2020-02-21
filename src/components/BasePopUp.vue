@@ -1,5 +1,8 @@
 <template>
-  <div class='BasePopUp'>
+  <div
+    @click.self='setPopUp(null)'  
+    class='BasePopUp'
+  >
     <div class='BasePopUp__window'>
       <slot></slot>
     </div>
@@ -7,8 +10,15 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
+
   export default {
-    name: 'BasePopUp'
+    name: 'BasePopUp',
+    methods: {
+      ...mapMutations([
+        'setPopUp'
+      ])
+    }
   }
 </script>
 
