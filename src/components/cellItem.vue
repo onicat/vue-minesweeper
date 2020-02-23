@@ -1,30 +1,52 @@
-<template lang="pug">
-  div.CellItem(
-    :class='cellClasses'
-  ) {{ (cell.isChecked && cell.status > 0) ? cell.status : null }}
-</template>
-
 <script>
   export default {
     name: 'CellItem',
+    functional: true,
     props: {
       cell: Object,
-      isLighted: Boolean
+      isLighted: Boolean,
+      stage: String
     },
-    computed: {
-      cellClasses() {
-        let isLighted = this.isLighted;
-        let cell = this.cell;
-        
-        return {
-          "CellItem_lighted_green": isLighted && cell.status != -1,
-          "CellItem_lighted_red": isLighted && cell.status == -1,
-          "CellItem_checked": cell.isChecked,
-          "CellItem_flag": cell.isFlagged,
-          "CellItem_explosion": cell.status == -2,
-          "CellItem_mine": cell.isChecked && cell.status == -1
+    render(h, ctx) {
+      let isLighted = ctx.props.isLighted;
+      let cell = ctx.props.cell;
+      let stage = ctx.props.stage;
+      let isGameOver = stage == 'win' || stage == 'losing';
+      let classes = ['CellItem'];
+      
+      if (isLighted) {
+        if (cell.status == -1) {
+          classes.push('CellItem_lighted_red')
+        } else {
+          classes.push('CellItem_lighted_green')
         }
       }
+
+      if (cell.isChecked) {
+        classes.push('CellItem_checked');
+
+        if (cell.status == -1) {
+          classes.push('CellItem_mine')
+        }
+      }
+
+      if (cell.status == -2) {
+        classes.push('CellItem_explosion')
+      }
+
+      if (cell.isFlagged) {
+        classes.push('CellItem_flag');
+
+        if (isGameOver && cell.status == -1) {
+          classes.push('CellItem_mistake')
+        }
+      }
+
+      return h('div', {
+        class: classes,
+        on: ctx.listeners
+      }, (cell.isChecked && cell.status > 0) ? cell.status : null
+      )
     }
   }
 </script>
@@ -59,6 +81,11 @@
 
   .CellItem_explosion {
     background: no-repeat center/70% url(~@/assets/img/64/explosion.png) 
+              #2196F3;
+  }
+
+  .CellItem_mistake {
+    background: no-repeat center/70% url(~@/assets/img/64/mistake.png) 
               #2196F3;
   }
 

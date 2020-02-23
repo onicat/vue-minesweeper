@@ -8,8 +8,9 @@
       :cell='cell'
       :key='index'
       :isLighted='lightedCellIndexes.includes(index)'
-      @click.native='selectCell(cell)'
-      @contextmenu.native='alternativeSelectCell(cell)'
+      :stage='stage'
+      @click='selectCell(cell)'
+      @contextmenu='alternativeSelectCell(cell)'
     )
 
 </template>
