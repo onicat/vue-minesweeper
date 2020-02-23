@@ -115,8 +115,8 @@
       validateCache(...cacheProps) {
         let cache = this.cache;
         function equalize(prop, min, max) {
-          if (cache[prop] < min) cache[prop] = min;
-          if (cache[prop] > max) cache[prop] = max;
+          cache[prop] = Math.max(min, cache[prop]);
+          cache[prop] = Math.min(max, cache[prop]);
         }
 
         for (let prop of cacheProps) {
