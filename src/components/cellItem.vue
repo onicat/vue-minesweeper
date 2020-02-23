@@ -1,54 +1,54 @@
 <script>
-  export default {
-    name: 'CellItem',
-    functional: true,
-    props: {
-      cell: Object,
-      isLighted: Boolean,
-      stage: String
-    },
-    render(h, ctx) {
-      let isLighted = ctx.props.isLighted;
-      let cell = ctx.props.cell;
-      let stage = ctx.props.stage;
-      let isGameOver = stage == 'win' || stage == 'losing';
-      let classes = ['CellItem'];
-      
-      if (isLighted) {
-        if (cell.status == -1) {
-          classes.push('CellItem_lighted_red')
-        } else {
-          classes.push('CellItem_lighted_green')
-        }
+export default {
+  name: 'CellItem',
+  functional: true,
+  props: {
+    cell: Object,
+    isLighted: Boolean,
+    stage: String
+  },
+  render(h, ctx) {
+    let isLighted = ctx.props.isLighted;
+    let cell = ctx.props.cell;
+    let stage = ctx.props.stage;
+    let isGameOver = stage == 'win' || stage == 'losing';
+    let classes = ['CellItem'];
+    
+    if (isLighted) {
+      if (cell.status == -1) {
+        classes.push('CellItem_lighted_red')
+      } else {
+        classes.push('CellItem_lighted_green')
       }
-
-      if (cell.isChecked) {
-        classes.push('CellItem_checked');
-
-        if (cell.status == -1) {
-          classes.push('CellItem_mine')
-        }
-      }
-
-      if (cell.status == -2) {
-        classes.push('CellItem_explosion')
-      }
-
-      if (cell.isFlagged) {
-        classes.push('CellItem_flag');
-
-        if (isGameOver && cell.status == -1) {
-          classes.push('CellItem_mistake')
-        }
-      }
-
-      return h('div', {
-        class: classes,
-        on: ctx.listeners
-      }, (cell.isChecked && cell.status > 0) ? cell.status : null
-      )
     }
+
+    if (cell.isChecked) {
+      classes.push('CellItem_checked');
+
+      if (cell.status == -1) {
+        classes.push('CellItem_mine')
+      }
+    }
+
+    if (cell.status == -2) {
+      classes.push('CellItem_explosion')
+    }
+
+    if (cell.isFlagged) {
+      classes.push('CellItem_flag');
+
+      if (isGameOver && cell.status == -1) {
+        classes.push('CellItem_mistake')
+      }
+    }
+
+    return h('div', {
+      class: classes,
+      on: ctx.listeners
+    }, (cell.isChecked && cell.status > 0) ? cell.status : null
+    )
   }
+}
 </script>
 
 <style>

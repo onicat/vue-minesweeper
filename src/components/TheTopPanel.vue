@@ -1,5 +1,4 @@
 <template lang='pug'>
-  
   div.TheTopPanel
     div.TheTopPanel__button.TheTopPanel__button_settings(
       @click='setPopUp("settings")'
@@ -13,76 +12,75 @@
     h2.TheTopPanel__counter.TheTopPanel__counter_time
       | {{ time }}
     div.TheTopPanel__button.TheTopPanel__button_ref
-
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import { mapMutations } from 'vuex';
-  import fieldGenerator from '@/mixins/fieldGenerator.js';
+import { mapState } from 'vuex';
+import { mapMutations } from 'vuex';
+import fieldGenerator from '@/mixins/fieldGenerator.js';
 
-  export default {
-    name: 'TheTopPanel',
-    mixins: [fieldGenerator],
-    data() {
-      return {
-        time: 0,
-        timerId: null,
-        restartButtonClass: 'TheTopPanel__button_thinking'
-      }
-    },
-    computed: {
-      ...mapState({
-        'stage': 'stage',
-        'minesNumber': state => state.settings.minesNumber,
-        'flagsCounter': 'flagsCounter'
-      }),
-      flagsLeft() {
-        return this.minesNumber - this.flagsCounter
-      }
-    },
-    watch: {
-      stage(value) {
-        switch (value) {
-          case 'win':
-            this.restartButtonClass = 'TheTopPanel__button_cool';
-            clearInterval(this.timerId);
-            break;
-          case 'losing':
-            this.restartButtonClass = 'TheTopPanel__button_angry'
-            clearInterval(this.timerId);
-            break;
-          case 'start':
-            this.restartButtonClass = 'TheTopPanel__button_thinking';
-            clearInterval(this.timerId);
-            this.time = 0;
-            break;
-          case 'game':
-            this.restartButtonClass = 'TheTopPanel__button_thinking';
-            this.timerId = setInterval(() => this.time++, 1000);
-            break;
-        }
-      }
-    },
-    created() {
-      window.addEventListener('keyup', event => {
-        if (event.code == 'F2') {
-          this.restart()
-        }
-      })
-    },
-    methods: {
-      ...mapMutations([
-        'setPopUp',
-        'updateCells',
-        'reset'
-      ]),
-      restart() {
-        this.reset();
-        this.fieldGenerator_generateField();
+export default {
+  name: 'TheTopPanel',
+  mixins: [fieldGenerator],
+  data() {
+    return {
+      time: 0,
+      timerId: null,
+      restartButtonClass: 'TheTopPanel__button_thinking'
+    }
+  },
+  computed: {
+    ...mapState({
+      'stage': 'stage',
+      'minesNumber': state => state.settings.minesNumber,
+      'flagsCounter': 'flagsCounter'
+    }),
+    flagsLeft() {
+      return this.minesNumber - this.flagsCounter
+    }
+  },
+  watch: {
+    stage(value) {
+      switch (value) {
+        case 'win':
+          this.restartButtonClass = 'TheTopPanel__button_cool';
+          clearInterval(this.timerId);
+          break;
+        case 'losing':
+          this.restartButtonClass = 'TheTopPanel__button_angry'
+          clearInterval(this.timerId);
+          break;
+        case 'start':
+          this.restartButtonClass = 'TheTopPanel__button_thinking';
+          clearInterval(this.timerId);
+          this.time = 0;
+          break;
+        case 'game':
+          this.restartButtonClass = 'TheTopPanel__button_thinking';
+          this.timerId = setInterval(() => this.time++, 1000);
+          break;
       }
     }
+  },
+  created() {
+    window.addEventListener('keyup', event => {
+      if (event.code == 'F2') {
+        this.restart()
+      }
+    })
+  },
+  methods: {
+    ...mapMutations([
+      'setPopUp',
+      'updateCells',
+      'reset'
+    ]),
+    restart() {
+      this.reset();
+      this.fieldGenerator_generateField();
+    }
   }
+}
 </script>
 
 <style>

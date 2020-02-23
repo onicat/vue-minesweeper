@@ -1,5 +1,4 @@
 <template lang='pug'>
-  
   div.BasePopUp(
     @click.self='setPopUp(null)'
   )
@@ -8,16 +7,16 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 
-  export default {
-    name: 'BasePopUp',
-    methods: {
-      ...mapMutations([
-        'setPopUp'
-      ])
-    }
+export default {
+  name: 'BasePopUp',
+  methods: {
+    ...mapMutations([
+      'setPopUp'
+    ])
   }
+}
 </script>
 
 <style>

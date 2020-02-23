@@ -1,5 +1,4 @@
 <template lang='pug'>
-  
   div.App#App
     TheTopPanel
     div.App__field-stage
@@ -13,32 +12,32 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import TheTopPanel from '@/components/TheTopPanel.vue';
-  import TheGameField from '@/components/TheGameField.vue';
-  import PopUpSettings from '@/components/PopUpSettings.vue';
+import { mapState } from 'vuex';
+import TheTopPanel from '@/components/TheTopPanel.vue';
+import TheGameField from '@/components/TheGameField.vue';
+import PopUpSettings from '@/components/PopUpSettings.vue';
 
-  export default {
-    name: 'App',
-    components: {
-      TheTopPanel,
-      TheGameField,
-      PopUpSettings
-    },
-    computed: {
-      ...mapState([
-        'popUp'
-      ])
-    },
-    created() {
-      window.addEventListener('contextmenu', (event) => {
-        event.preventDefault()
-      });
-      window.addEventListener('selectstart', (event) => {
-        event.preventDefault()
-      });
-    }
+export default {
+  name: 'App',
+  components: {
+    TheTopPanel,
+    TheGameField,
+    PopUpSettings
+  },
+  computed: {
+    ...mapState([
+      'popUp'
+    ])
+  },
+  created() {
+    window.addEventListener('contextmenu', (event) => {
+      event.preventDefault()
+    });
+    window.addEventListener('selectstart', (event) => {
+      event.preventDefault()
+    });
   }
+}
 </script>
 
 <style>
