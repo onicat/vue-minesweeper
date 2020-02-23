@@ -49,12 +49,13 @@ const store = new Vuex.Store({
       state.checkedCellsCounter++;
     },
     updateMinesSystem(state, indexes) {
+      let getAreaSerialIndexes = this.getters.getAreaSerialIndexes;
       let cells = state.cells;
       for (let index of indexes) {
         cells[index].status = -1;
         state.minesIndexes.push(index);
 
-        let mineArea = this.getters.getAreaSerialIndexes(cells[index]);
+        let mineArea = getAreaSerialIndexes(cells[index]).slice();
         for (let index of mineArea) {
           let cell = cells[index];
           if (cell.status != -1) cell.status++

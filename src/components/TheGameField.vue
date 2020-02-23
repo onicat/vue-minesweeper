@@ -112,7 +112,7 @@
         }
       },
       installMines(cell) {
-        let clickArea = this.getAreaSerialIndexes(cell);
+        let clickArea = this.getAreaSerialIndexes(cell).slice();
         let indexes = [];
         let cells = this.cells;
         
