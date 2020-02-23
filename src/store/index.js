@@ -39,7 +39,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     updateCells(state, cells) {
-      state.cells = cells;
+      state.cells = cells.splice(0, cells.length);
     },
     setStage(state, stage) {
       state.stage = stage
@@ -62,7 +62,7 @@ const store = new Vuex.Store({
       }
     },
     reset(state, force) {
-      state.minesIndexes = [];
+      state.minesIndexes.splice(0, state.minesIndexes.length);
       this.commit('setStage', 'start');
       state.checkedCellsCounter = 0;
       state.flagsCounter = 0;
