@@ -1,74 +1,50 @@
-<template>
-  <BasePopUp class='PopUpSettings'>
-    <h2 class='PopUpSettings__title'>Settings</h2>
-    <div class='PopUpSettings__section'>
-      <button
-        class='BasePopUp__button BasePopUp__button_small'
+<template lang="pug">
+
+  mixin button(text, size)
+    button.BasePopUp__button(
+      class=`BasePopUp__button_${size}`
+    )&attributes(attributes)
+      =text
+
+  mixin input(model, title)
+    =title
+    input.PopUpSettings__input(
+      type='number'
+      v-model.lazy.number=`${model}`
+    )&attributes(attributes)
+
+  BasePopUp.PopUpSettings
+    h2.PopUpSettings__title Settings
+    div.PopUpSettings__section
+      +button('Easy', 'small')(
         @click='selectDifficulty("Easy")'
-      >
-        Easy  
-      </button>
-      <button
-        class='BasePopUp__button BasePopUp__button_small'
+      )
+      +button('Medium', 'small')(
         @click='selectDifficulty("Medium")'
-      >
-        Medium  
-      </button>
-      <button
-        class='BasePopUp__button BasePopUp__button_small'
+      )
+      +button('Expert', 'small')(
         @click='selectDifficulty("Expert")'
-      >
-        Expert  
-      </button>
-    </div>
-    <div class='PopUpSettings__section PopUpSettings__section_inputs'>
-      Width:
-      <input 
-        class='PopUpSettings__input'
-        type="number"
-        v-model.lazy.number='cache.colsNumber'
-        @change='
-          validateCache("colsNumber", 9, 100);
-          validateCache("minesNumber", 10, minesLimit);
-        '
-      >
-      Height:
-      <input 
-        class='PopUpSettings__input'
-        type="number"
-        v-model.lazy.number='cache.rowsNumber'
-        @change='
-          validateCache("rowsNumber", 9, 100);
-          validateCache("minesNumber", 10, minesLimit);
-        '
-      >
-      Mines:
-      <input 
-        class='PopUpSettings__input'
-        type="number"
-        v-model.lazy.number='cache.minesNumber'
-        @change='validateCache("minesNumber", 10, minesLimit)'
-      >
-    </div>
-    <div class='PopUpSettings__section'>
-      <button
-        class='BasePopUp__button BasePopUp__button_big'
-        @click='
-          updateSettings(cache);
-          restart(true);
-          setPopUp(null)
-        '
-      >
-        Ok
-      </button>
-      <button
-        class='BasePopUp__button BasePopUp__button_big'
+      )
+    
+    div.PopUpSettings__section.PopUpSettings__section_inputs
+      +input('cache.colsNumber', 'Width')(
+        @change='validateCache("colsNumber","minesNumber")'
+      )
+      +input('cache.rowsNumber', 'Height')(
+        @change='validateCache("rowsNumber", "minesNumber")'
+      )
+      +input('cache.minesNumber', 'Mines')(
+        @change='validateCache("minesNumber")'
+      )
+
+    div.PopUpSettings__section
+      +button('Ok', 'big')(
+        @click='confirmChanges()'
+      )
+      +button('Cancel', 'big')(
         @click='setPopUp(null)'
-      >
-        Cancel
-      </button>
-    </div>
-  </BasePopUp>
+      )
+
 </template>
 
 <script>
@@ -136,14 +112,29 @@
             break;
         }
       },
-      validateCache(property, min, max) {
+      validateCache(...cacheProps) {
         let cache = this.cache;
-        if (cache[property] < min) cache[property] = min;
-        if (cache[property] > max) cache[property] = max;
+        function equalize(prop, min, max) {
+          if (cache[prop] < min) cache[prop] = min;
+          if (cache[prop] > max) cache[prop] = max;
+        }
+
+        for (let prop of cacheProps) {
+          if (prop == 'minesNumber') {
+            equalize('minesNumber', 10, this.minesLimit)
+          } else {
+            equalize(prop, 9, 100)
+          }
+        }
       },
       restart() {
         this.reset(true);
         this.fieldGenerator_generateField()
+      },
+      confirmChanges() {
+        this.updateSettings(this.cache);
+        this.restart(true);
+        this.setPopUp(null);
       }
     }
   }

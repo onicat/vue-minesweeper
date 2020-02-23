@@ -1,19 +1,17 @@
-<template>
-  <div class='TheGameField'
-    :style='{
-      gridTemplateRows: `repeat(${settings.rowsNumber}, 30px)`,
-      gridTemplateColumns: `repeat(${settings.colsNumber}, 30px)`
-    }'
-  >
-    <CellItem
+<template lang='pug'>
+
+  div.TheGameField(
+    :style='TheGameFieldStyles'
+  )
+    CellItem(
       v-for='(cell, index) in $store.state.cells'
       :cell='cell'
       :key='index'
       :isLighted='lightedCellIndexes.includes(index)'
       @click.native='selectCell(cell)'
       @contextmenu.native='alternativeSelectCell(cell)'
-    />
-  </div>
+    )
+
 </template>
 
 <script>
@@ -49,6 +47,12 @@
       isWin() {
         let uncheckedLeft = this.cells.length - this.checkedCellsCounter;
         return (uncheckedLeft == this.minesIndexes.length) ? true : false; 
+      },
+      TheGameFieldStyles() {
+        return {
+          gridTemplateRows: `repeat(${this.settings.rowsNumber}, 30px)`,
+          gridTemplateColumns: `repeat(${this.settings.colsNumber}, 30px)`
+        }
       }
     },
     watch: {

@@ -1,26 +1,19 @@
-<template>
-  <div class='TheTopPanel'>
-    <div 
-      class='TheTopPanel__button TheTopPanel__button_settings'
+<template lang='pug'>
+  
+  div.TheTopPanel
+    div.TheTopPanel__button.TheTopPanel__button_settings(
       @click='setPopUp("settings")'
-    >
-    </div>
-    <h2 class='TheTopPanel__counter TheTopPanel__counter_flags'>
-      {{ flagsLeft }}
-    </h2>
-    <div 
-      class='TheTopPanel__button'
+    )
+    h2.TheTopPanel__counter.TheTopPanel__counter_flags
+      | {{ flagsLeft }}
+    div.TheTopPanel__button(
       :class='[restartButtonClass]'
       @click='restart'
-    >
-    </div>
-    <h2 class='TheTopPanel__counter TheTopPanel__counter_time'>
-      {{ time }}
-    </h2>
-    <div 
-      class='TheTopPanel__button TheTopPanel__button_ref'>
-    </div>
-  </div>
+    )
+    h2.TheTopPanel__counter.TheTopPanel__counter_time
+      | {{ time }}
+    div.TheTopPanel__button.TheTopPanel__button_ref
+
 </template>
 
 <script>

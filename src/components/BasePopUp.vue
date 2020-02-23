@@ -1,12 +1,10 @@
-<template>
-  <div
-    @click.self='setPopUp(null)'  
-    class='BasePopUp'
-  >
-    <div class='BasePopUp__window'>
-      <slot></slot>
-    </div>
-  </div>
+<template lang='pug'>
+  
+  div.BasePopUp(
+    @click.self='setPopUp(null)'
+  )
+    div.BasePopUp__window
+      slot
 </template>
 
 <script>

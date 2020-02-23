@@ -1,16 +1,7 @@
-<template>
-  <div 
-    class='CellItem'
-    :class='{
-      "CellItem_lighted_green": isLighted && cell.status != -1,
-      "CellItem_lighted_red": isLighted && cell.status == -1,
-      "CellItem_checked": cell.isChecked,
-      "CellItem_flag": cell.isFlagged,
-      "CellItem_explosion": cell.status == -2,
-      "CellItem_mine": cell.isChecked && cell.status == -1
-    }'
-  > {{ (cell.isChecked && cell.status > 0) ? cell.status : null }}
-  </div>
+<template lang="pug">
+  div.CellItem(
+    :class='cellClasses'
+  ) {{ (cell.isChecked && cell.status > 0) ? cell.status : null }}
 </template>
 
 <script>
@@ -19,6 +10,21 @@
     props: {
       cell: Object,
       isLighted: Boolean
+    },
+    computed: {
+      cellClasses() {
+        let isLighted = this.isLighted;
+        let cell = this.cell;
+        
+        return {
+          "CellItem_lighted_green": isLighted && cell.status != -1,
+          "CellItem_lighted_red": isLighted && cell.status == -1,
+          "CellItem_checked": cell.isChecked,
+          "CellItem_flag": cell.isFlagged,
+          "CellItem_explosion": cell.status == -2,
+          "CellItem_mine": cell.isChecked && cell.status == -1
+        }
+      }
     }
   }
 </script>

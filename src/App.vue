@@ -1,13 +1,15 @@
-<template>
-  <div class='App' id='App'>
-    <TheTopPanel/>
-    <div class='App__field-stage'>
-      <TheGameField/>
-    </div>
-    <transition name='fade'>
-      <PopUpSettings v-if='popUp == "settings"'/>
-    </transition>
-  </div>
+<template lang='pug'>
+  
+  div.App#App
+    TheTopPanel
+    div.App__field-stage
+      TheGameField
+    transition(
+      name='fade'
+    )
+      PopUpSettings(
+        v-if='popUp == "settings"'
+      )
 </template>
 
 <script>
