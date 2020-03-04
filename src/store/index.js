@@ -39,6 +39,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     updateCells(state, cells) {
+      state.cells = cells;
     },
     setStage(state, stage) {
       state.stage = stage
@@ -68,7 +69,7 @@ const store = new Vuex.Store({
       state.flagsCounter = 0;
 
       if (force) {
-        state.cells = [];
+        state.cells.splice(0, state.cells.length);
       } else {
         for (let cell of state.cells) {
           cell.isChecked = false;
