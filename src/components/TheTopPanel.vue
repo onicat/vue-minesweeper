@@ -7,7 +7,7 @@
       | {{ flagsLeft }}
     div.TheTopPanel__button(
       :class='[restartButtonClass]'
-      @click='restart()'
+      @click='reset()'
     )
     h2.TheTopPanel__counter.TheTopPanel__counter_time
       | {{ time }}
@@ -17,11 +17,9 @@
 <script>
 import { mapState } from 'vuex';
 import { mapMutations } from 'vuex';
-import fieldGenerator from '@/mixins/fieldGenerator.js';
 
 export default {
   name: 'TheTopPanel',
-  mixins: [fieldGenerator],
   data() {
     return {
       time: 0,
@@ -65,7 +63,7 @@ export default {
   created() {
     window.addEventListener('keyup', event => {
       if (event.code == 'F2') {
-        this.restart()
+        this.reset()
       }
     })
   },
@@ -73,11 +71,7 @@ export default {
     ...mapMutations([
       'setPopUp',
       'reset'
-    ]),
-    restart() {
-      this.reset();
-      this.fieldGenerator_generateField();
-    }
+    ])
   }
 }
 </script>
