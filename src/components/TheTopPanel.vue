@@ -7,7 +7,7 @@
       | {{ flagsLeft }}
     div.TheTopPanel__button(
       :class='[restartButtonClass]'
-      @click='restart'
+      @click='restart()'
     )
     h2.TheTopPanel__counter.TheTopPanel__counter_time
       | {{ time }}
@@ -72,7 +72,6 @@ export default {
   methods: {
     ...mapMutations([
       'setPopUp',
-      'updateCells',
       'reset'
     ]),
     restart() {
@@ -98,11 +97,7 @@ export default {
     height: 40px;
     margin: 0 10px;
     position: relative;
-    transition: all .3s;
-  }
-
-  .TheTopPanel__button:active {
-    transform: scale(1.2);
+    transition: all .2s;
   }
 
   .TheTopPanel__button_thinking {
@@ -119,7 +114,6 @@ export default {
 
   .TheTopPanel__button_settings {
     background: no-repeat center/100% url(~@/assets/img/128/settings.png);
-    transition: transform 0.3s
   }
 
   .TheTopPanel__button_settings:active {

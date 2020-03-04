@@ -39,7 +39,6 @@ const store = new Vuex.Store({
   },
   mutations: {
     updateCells(state, cells) {
-      state.cells = cells.splice(0, cells.length);
     },
     setStage(state, stage) {
       state.stage = stage
@@ -93,8 +92,8 @@ const store = new Vuex.Store({
     toWin(state) {
       state.stage = 'win'
     },
-    setPopUp(state, popUp) {
-      state.popUp = popUp
+    setPopUp(state, popUpName) {
+      state.popUp = popUpName
     },
     updateSettings(state, settings) {
       Object.assign(state.settings, settings);

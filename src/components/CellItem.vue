@@ -37,7 +37,7 @@ export default {
     if (cell.isFlagged) {
       classes.push('CellItem_flag');
 
-      if (isGameOver && cell.status == -1) {
+      if (isGameOver && cell.status > -1) {
         classes.push('CellItem_mistake')
       }
     }
@@ -66,7 +66,6 @@ export default {
 
   .CellItem_checked {
     background-color: #1976D2;
-    box-shadow: none;
   }
 
   .CellItem_mine {

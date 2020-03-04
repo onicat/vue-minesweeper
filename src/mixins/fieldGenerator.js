@@ -25,7 +25,7 @@ export default {
             isFlagged: false
           };
     
-          cells.push(cell)
+          cells.push(cell);
         }
       }
     
