@@ -38,7 +38,8 @@ export default {
       'stage',
       'cells',
       'checkedCellsCounter',
-      'minesIndexes'
+      'minesIndexes',
+      'cellSize'
     ]),
     ...mapGetters([
       'getAreaSerialIndexes'
@@ -49,8 +50,9 @@ export default {
     },
     TheGameFieldStyles() {
       return {
-        gridTemplateRows: `repeat(${this.settings.rowsNumber}, 30px)`,
-        gridTemplateColumns: `repeat(${this.settings.colsNumber}, 30px)`
+        gridTemplateRows: `repeat(${this.settings.rowsNumber}, ${this.cellSize}px)`,
+        gridTemplateColumns: `repeat(${this.settings.colsNumber}, ${this.cellSize}px)`,
+        fontSize: `${this.cellSize / 30}em`
       }
     }
   },

@@ -9,6 +9,7 @@ const store = new Vuex.Store({
       colsNumber: 9,
       minesNumber: 10
     },
+    cellSize: 30,
     popUp: null,
     cells: [],
     minesIndexes: [],
@@ -98,6 +99,9 @@ const store = new Vuex.Store({
     },
     updateSettings(state, settings) {
       Object.assign(state.settings, settings);
+    },
+    updateCellSize(state, newSize) {
+      state.cellSize = newSize;
     }
   }
 });

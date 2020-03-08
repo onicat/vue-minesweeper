@@ -54,14 +54,13 @@ export default {
 <style>
   .CellItem {
     background-color: #2196F3;
-    box-shadow: inset 0 -3px #1976D2; 
+    box-shadow: inset 0 -0.2em #1976D2;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Arial;
     font-weight: bold;
     color: #303130;
-    font-size: 1.2em;
   }
 
   .CellItem_checked {
