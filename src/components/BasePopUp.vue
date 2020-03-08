@@ -1,21 +1,13 @@
 <template lang='pug'>
-  div.BasePopUp(
-    @click.self='setPopUp(null)'
-  )
+  div.BasePopUp
     div.BasePopUp__window
       slot
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
 
 export default {
-  name: 'BasePopUp',
-  methods: {
-    ...mapMutations([
-      'setPopUp'
-    ])
-  }
+  name: 'BasePopUp'
 }
 </script>
 
