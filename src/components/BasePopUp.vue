@@ -66,4 +66,5 @@ export default {
     width: 150px;
     height: 50px;
   }
+  
 </style>

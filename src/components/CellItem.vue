@@ -7,6 +7,7 @@ export default {
     isLighted: Boolean,
     stage: String
   },
+  
   render(h, ctx) {
     let isLighted = ctx.props.isLighted;
     let cell = ctx.props.cell;
