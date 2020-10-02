@@ -1,4 +1,5 @@
 <template lang="pug">
+
   mixin button(text, size)
     button.BasePopUp__button(
       class=`BasePopUp__button_${size}`
