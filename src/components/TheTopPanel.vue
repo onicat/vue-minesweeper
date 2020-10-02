@@ -56,20 +56,20 @@ export default {
   watch: {
     stage(value) {
       switch (value) {
-        case 'win':
+        case STAGE_WIN:
           this.restartButtonClass = 'TheTopPanel__button_cool';
           clearInterval(this.timerId);
           break;
-        case 'losing':
+        case STAGE_LOSS:
           this.restartButtonClass = 'TheTopPanel__button_angry'
           clearInterval(this.timerId);
           break;
-        case 'start':
+        case STAGE_START:
           this.restartButtonClass = 'TheTopPanel__button_thinking';
           clearInterval(this.timerId);
           this.time = 0;
           break;
-        case 'game':
+        case STAGE_GAME:
           this.restartButtonClass = 'TheTopPanel__button_thinking';
           this.timerId = setInterval(() => this.time++, 1000);
           break;
@@ -78,7 +78,7 @@ export default {
   },
   created() {
     window.addEventListener('keyup', event => {
-      if (event.code == 'F2') {
+      if (event.code == REFRESH_BUTTON) {
         this.reset()
       }
     })

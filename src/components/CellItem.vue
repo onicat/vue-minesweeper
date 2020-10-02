@@ -11,11 +11,11 @@ export default {
     let isLighted = ctx.props.isLighted;
     let cell = ctx.props.cell;
     let stage = ctx.props.stage;
-    let isGameOver = stage == 'win' || stage == 'losing';
+    let isGameOver = stage == STAGE_WIN || stage == STAGE_LOSS;
     let classes = ['CellItem'];
     
     if (isLighted) {
-      if (cell.status == -1) {
+      if (cell.status == STATUS_LOSS) {
         classes.push('CellItem_lighted_red')
       } else {
         classes.push('CellItem_lighted_green')
@@ -25,12 +25,12 @@ export default {
     if (cell.isChecked) {
       classes.push('CellItem_checked');
 
-      if (cell.status == -1) {
+      if (cell.status == STATUS_LOSS) {
         classes.push('CellItem_mine')
       }
     }
 
-    if (cell.status == -2) {
+    if (cell.status == STATUS_EXPOSION) {
       classes.push('CellItem_explosion')
     }
 

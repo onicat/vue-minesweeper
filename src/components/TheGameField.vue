@@ -83,7 +83,7 @@ export default {
         
         if (this.lightedCellIndexes.length != 0) return;
         this.lightedCellIndexes.push(...this.getAreaSerialIndexes(cell));
-        this.lightingTimer = setTimeout(() => this.lightedCellIndexes = [], 10000);
+        this.lightingTimer = setTimeout(() => this.lightedCellIndexes = [], TIMEOUT);
       
       } else {
         this.toggleFlag(cell);
@@ -92,16 +92,16 @@ export default {
     selectCell(cell) {
       let stage = this.stage;
       
-      if (cell.isFlagged || stage == 'losing' || stage == 'win') {
+      if (cell.isFlagged || stage == STAGE_LOSS || stage == STAGE_WIN) {
         return
       }
 
-      if (this.stage == 'start') {
-        this.setStage('game');
+      if (this.stage == STAGE_START) {
+        this.setStage(STAGE_GAME);
         this.installMines(cell);
       }
 
-      if (cell.status == -1) {
+      if (cell.status == STATUS_LOSS) {
         this.toLose(cell);
       }
 
