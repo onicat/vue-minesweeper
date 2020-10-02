@@ -37,7 +37,6 @@ export default {
 
     if (cell.isFlagged) {
       classes.push('CellItem_flag');
-
       if (isGameOver && cell.status > -1) {
         classes.push('CellItem_mistake')
       }
